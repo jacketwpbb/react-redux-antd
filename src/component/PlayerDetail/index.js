@@ -17,14 +17,8 @@ class PlayerDetail extends Component {
 	}
 }
 
-function mapStateToProps({ players, matchList }) {
-	const playerMap = {};
-	players.forEach(player => {
-		playerMap[player.MemberId] = player;
-	});
-
-	console.log("players", playerMap);
-	return { playerMap, matchList };
+function mapStateToProps({ matchList }) {
+	return { matchList };
 }
 
 export default connect(mapStateToProps, { fetchPlayerMatchList })(PlayerDetail);
