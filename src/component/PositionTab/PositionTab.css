@@ -1,0 +1,18 @@
+.playerList {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.player {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+.player .playerImg {
+	width: 100px;
+	height: 100px;
+}
+
+li > a {
+	display: block;
+}
