@@ -15,7 +15,7 @@ export function fetchPlayers() {
 
 export function fetchPlayerMatchList(id) {
 	const request = axios.get(
-		`${ROOT_URL}/getLPLMatchResult.ashx?type=member&id=${id}`
+		`${ROOT_URL}/getLPLMatchResult.ashx?type=member&id=${id}&t=2`
 	);
 	return {
 		type: FETCH_PLAYER_MATCH_LIST,

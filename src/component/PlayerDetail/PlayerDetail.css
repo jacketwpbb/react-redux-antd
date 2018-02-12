@@ -1,0 +1,207 @@
+@font-face {
+	font-family: "TradeGothic";
+	src: url("../../assets/fonts/TradeGothic.eot#iefix");
+	src: url("../../assets/fonts/TradeGothic.eot?#iefix") format("eot"),
+		url("../../assets/fonts/TradeGothic.woff2") format("woff2"),
+		url("../../assets/fonts/TradeGothic.woff") format("woff"),
+		url("../../assets/fonts/TradeGothic.ttf") format("truetype"),
+		url("../../assets/fonts/TradeGothic.svg#df0f9c50-3ce3-4b1f-8120-074ca66b83b1")
+			format("svg");
+}
+
+.PlayerDetail {
+	font-family: "TradeGothic", "微软雅黑";
+
+	background: #101010;
+}
+p {
+	padding: 0;
+	margin: 0;
+}
+.header {
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 450px;
+	background-color: #050808;
+}
+
+.header .imagesBox,
+.imagesBox > div {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.imagesBox > div {
+	position: absolute;
+	background-repeat: no-repeat;
+}
+.imagesBox > .player {
+	max-width: 1200px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.imagesBox > .left {
+	background-image: url("../../assets/magic-blue-left-L.jpg");
+	background-position: 0 100%;
+}
+.imagesBox > .right {
+	background-image: url("../../assets/magic-blue-right-L.jpg");
+	background-position: 100% 100%;
+}
+
+.playerInfo {
+	font-family: "TradeGothic", "微软雅黑";
+	color: #fff;
+	font-size: 40px;
+	text-align: right;
+	margin-top: 200px;
+	margin-right: 50px;
+}
+
+.playerInfo .enName {
+	font-size: 75px;
+}
+
+.championImage {
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+}
+.matchList {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+.matchList-title {
+	font-size: 48px;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	margin: 10px 0;
+}
+.matchList-item {
+	display: flex;
+	justify-content: space-around;
+	height: 124px;
+	border-top: 1px solid #444b52;
+	align-items: center;
+}
+
+.matchList-item:last {
+	border-bottom: 1px solid #444b52;
+}
+.matchList-item .tinyText {
+	color: #444b52;
+	font-size: 16px;
+}
+.matchList-item > div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: left;
+	color: #fff;
+	font-size: 19px;
+}
+
+.ant-collapse-borderless {
+	background: transparent;
+}
+.ant-collapse-header {
+	width: 100%;
+}
+.ant-collapse-borderless > .ant-collapse-item {
+	border: 0;
+}
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+	padding: 0;
+}
+.arrow {
+	display: none;
+}
+.tab-content {
+	color: #fff;
+}
+
+.down-icon {
+	font-size: 20px;
+	color: #fff;
+	transition: all 0.3s;
+}
+.ant-collapse-item-active .down-icon {
+	transform: rotate(180deg);
+}
+
+.heroInfo {
+	max-width: 700px;
+	margin: 0 auto;
+}
+.heroInfo-items {
+	display: flex;
+	align-items: center;
+
+	font-size: 20px;
+	color: #fff;
+	font-weight: bold;
+	margin: 20px 0;
+}
+.heroInfo-title {
+	width: 200px;
+}
+.items-box {
+	display: flex;
+	margin: 0;
+}
+.rune-image {
+	position: relative;
+}
+.rune-image:nth-child(2)::before {
+	display: block;
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	border-radius: 50%;
+	border: 2px solid #d0bf67;
+	background: #2d2d2d;
+	z-index: 0;
+}
+
+.rune-image img {
+	position: relative;
+	border: 2px solid #d0bf67;
+	border-radius: 50%;
+	width: 64px;
+}
+
+.rune-image.DOMINATION img,
+.rune-image.DOMINATION:nth-child(2)::before {
+	border: 2px solid #c63e40;
+}
+.rune-image.PRECISION img,
+.rune-image.PRECISION:nth-child(2)::before {
+	border: 2px solid #d0bf67;
+}
+.rune-image.SORCERY img,
+.rune-image.SORCERY:nth-child(2)::before {
+	border: 2px solid #9faafc;
+}
+.rune-image.RESOLVE img,
+.rune-image.RESOLVE:nth-child(2)::before {
+	border: 2px solid #a1d586;
+}
+.rune-image.INSPIRATION img,
+.rune-image.INSPIRATION:nth-child(2)::before {
+	border: 2px solid #49aab9;
+}
+
+.rune-image:nth-child(2) img {
+	position: relative;
+	border: 0;
+	transform: scale(1.2);
+}
+
+/*DOMINATION PRECISION SORCERY RESOLVE INSPIRATION*/

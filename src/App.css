@@ -3,18 +3,18 @@ body,
 ul,
 li,
 p {
-  padding: 0;
-  margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
 ul,
 li {
-  list-style: none;
+	list-style: none;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+	background-color: #222;
+	height: 30px;
+	padding: 20px;
+	color: white;
 }

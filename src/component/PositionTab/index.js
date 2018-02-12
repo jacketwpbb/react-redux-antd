@@ -23,19 +23,20 @@ class SlidingTabsDemo extends React.Component {
 
   renderPlayersByPosition(place) {
     const filteredPlayers = this.props.players.filter(
-      ({ Place }) => Place === place
+      ({ GamePlace }) => parseInt(GamePlace, 10) === place
     );
-
-    return filteredPlayers.map(({ GameName, MemberId }) => {
+    console.log("filteredPlayers", this.props.players);
+    return filteredPlayers.map(({ NickName, MemberId, UserIcon, RealName }) => {
       return (
         <li className="player" key={MemberId}>
           <Link to={`/players/${MemberId}`}>
             <img
-              src="http://img.crawler.qq.com/lolwebvideo/20180105043550/241a9804c113fe1db62d4ac135cc2675/0"
-              alt=""
+              src={UserIcon}
+              alt={RealName}
+              title={RealName}
               className="playerImg"
             />
-            <p className="playerName">{GameName}</p>
+            <p className="playerName">{NickName}</p>
           </Link>
         </li>
       );
