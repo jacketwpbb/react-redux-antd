@@ -9,6 +9,9 @@
 			format("svg");
 }
 
+html,body{
+	background-color: #050808;
+}
 .PlayerDetail {
 	font-family: "TradeGothic", "微软雅黑";
 
@@ -41,6 +44,7 @@ p {
 	max-width: 1200px;
 	left: 50%;
 	transform: translateX(-50%);
+	background-position: 10% 100%;
 }
 .imagesBox > .left {
 	background-image: url("../../assets/magic-blue-left-L.jpg");
@@ -64,10 +68,53 @@ p {
 	font-size: 75px;
 }
 
+
+.championImageBox{
+	position: relative;
+}
 .championImage {
 	width: 90px;
 	height: 90px;
 	border-radius: 50%;
+	overflow: hidden;
+}
+
+
+
+.championImageBox.win::before,.championImageBox.loss::before{
+	content: "胜";
+	display: block;
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	line-height: 23px;
+	border-radius: 50%;
+	border: 2px solid #35ab6a;
+	color: #35ab6a;
+	background-color: black;
+	text-align: center;
+	font-size: 12px;
+	top: -5px;
+	left: -5px;
+	z-index: 1;
+	box-sizing: border-box;
+
+}
+
+
+.championImageBox.loss::before{
+	content: "负";
+
+	border: 2px solid #b7374b;
+	color: #b7374b;
+
+}
+.championImage img{
+	width: calc(100% + 8px);
+	height: calc(100% + 8px);
+	margin-left: -4px;
+	margin-top: -4px;
+
 }
 .matchList {
 	max-width: 1200px;
@@ -116,6 +163,11 @@ p {
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
 	padding: 0;
 }
+
+
+.ant-tabs{
+	color: #fff;
+}
 .arrow {
 	display: none;
 }
@@ -133,75 +185,59 @@ p {
 }
 
 .heroInfo {
-	max-width: 700px;
-	margin: 0 auto;
+	/* max-width: 700px;
+	margin: 0 auto; */
 }
 .heroInfo-items {
-	display: flex;
-	align-items: center;
+/* 	display: flex;
+	align-items: center; */
 
 	font-size: 20px;
 	color: #fff;
 	font-weight: bold;
-	margin: 20px 0;
+	margin: 0 0 20px 0;
 }
 .heroInfo-title {
-	width: 200px;
+	
 }
-.items-box {
-	display: flex;
-	margin: 0;
-}
-.rune-image {
-	position: relative;
-}
-.rune-image:nth-child(2)::before {
-	display: block;
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	border-radius: 50%;
-	border: 2px solid #d0bf67;
-	background: #2d2d2d;
-	z-index: 0;
-}
-
-.rune-image img {
-	position: relative;
-	border: 2px solid #d0bf67;
-	border-radius: 50%;
+.item-img{
 	width: 64px;
+	height: 64px;
+}
+.item-img img{
+	width: 100%;
 }
 
-.rune-image.DOMINATION img,
-.rune-image.DOMINATION:nth-child(2)::before {
-	border: 2px solid #c63e40;
-}
-.rune-image.PRECISION img,
-.rune-image.PRECISION:nth-child(2)::before {
-	border: 2px solid #d0bf67;
-}
-.rune-image.SORCERY img,
-.rune-image.SORCERY:nth-child(2)::before {
-	border: 2px solid #9faafc;
-}
-.rune-image.RESOLVE img,
-.rune-image.RESOLVE:nth-child(2)::before {
-	border: 2px solid #a1d586;
-}
-.rune-image.INSPIRATION img,
-.rune-image.INSPIRATION:nth-child(2)::before {
-	border: 2px solid #49aab9;
-}
-
-.rune-image:nth-child(2) img {
-	position: relative;
-	border: 0;
-	transform: scale(1.2);
-}
-
-/*DOMINATION PRECISION SORCERY RESOLVE INSPIRATION*/
+@media screen and (max-width: 768px) { 
+	.item-img{
+		width:50px;
+		height:50px;
+	}
+	.championImage{
+		width: 60px;
+		height: 60px;
+	}
+	.matchList-item > div{
+		font-size: 12px;
+	}
+	.heroInfo-items{
+		font-size: 14px;
+	}
+	.header{
+		height: 360px;
+	}
+	.imagesBox > .right{
+		display: none;
+	}
+	.imagesBox > .player {
+		background-position: -20px 100% ;
+		-webkit-background-size: contain;
+		background-size: contain;
+		
+	}
+	.playerInfo{
+		margin-top: 150px;
+		margin-right: 20px;
+		text-shadow: black 2px 2px; 
+	}
+} 
