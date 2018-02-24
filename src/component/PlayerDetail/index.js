@@ -177,7 +177,7 @@ class PlayerDetail extends Component {
 	renderHeader() {
 		if (this.props.matchList.length > 0) {
 			const {
-				EnName,
+				NickName,
 				RealName,
 				UserPhoto550,
 				GamePlace
@@ -195,7 +195,7 @@ class PlayerDetail extends Component {
 							}}
 						>
 							<div className="playerInfo">
-								<p className="enName">{EnName}</p>
+								<p className="enName">{NickName}</p>
 								<p className="RealName">{RealName}</p>
 							</div>
 						</div>

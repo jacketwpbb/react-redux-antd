@@ -1,21 +1,25 @@
 import React, { Component } from "react";
 
 import "./App.css";
-import Home from "../src/component/HOME/index.js";
+import Nav from "../src/component/Nav/index.js";
+import Home from "../src/component/Home/index.js";
 import PlayerDetail from "../src/component/PlayerDetail/index.js";
+import PositionTab from "../src/component/PositionTab/index.js";
 
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">header</header>
-
         <Router>
           <div>
-            <Route exact path="/" component={Home} />
-            <Route path="/players/:MemberId" component={PlayerDetail} />
+            <Route path="/" component={Nav} />
+            <Switch>
+              <Route path="/home" component={Home} />
+              <Route path="/players/:MemberId" component={PlayerDetail} />
+              <Route path="/players" component={PositionTab} />
+            </Switch>
           </div>
         </Router>
       </div>

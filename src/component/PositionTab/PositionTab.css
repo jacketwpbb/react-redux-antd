@@ -12,7 +12,29 @@
 	width: 100px;
 	height: 100px;
 }
-
+.playerName {
+	color: #fff;
+}
 li > a {
 	display: block;
+}
+
+.ant-tabs {
+	color: #fff;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active,
+.ant-tabs-nav .ant-tabs-tab:hover,
+.player:hover .playerName {
+	color: #c79a3c;
+}
+.ant-tabs-ink-bar {
+	background-color: #c79a3c;
+}
+.ant-tabs-bar {
+	border-bottom: 1px solid #4c4c4c;
+}
+
+.ant-tabs-nav-scroll {
+	text-align: center;
 }

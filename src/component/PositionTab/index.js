@@ -62,7 +62,7 @@ class SlidingTabsDemo extends React.Component {
   render() {
     return (
       <div>
-        <Tabs defaultActiveKey="1" tabPosition="left">
+        <Tabs defaultActiveKey="1" tabPosition="top">
           {this.renderTabs()}
         </Tabs>
       </div>

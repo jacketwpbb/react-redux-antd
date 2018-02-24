@@ -1,0 +1,30 @@
+body {
+	background-color: #101010 !important;
+}
+
+.nav {
+	display: flex;
+	justify-content: center;
+	background-color: #121212;
+	position: relative;
+	z-index: 5;
+	height: 66px;
+	line-height: 66px;
+}
+
+.nav > a {
+	text-align: center;
+	color: #c79a3c;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 0 20px;
+	border-bottom: 2px solid transparent;
+}
+.nav > a:focus {
+	text-decoration: none;
+}
+.nav > a.active {
+	background: none;
+	border-color: #c79a3c;
+	color: #fff;
+}
