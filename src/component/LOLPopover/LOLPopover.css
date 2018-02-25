@@ -1,0 +1,68 @@
+.LOLPopover .ant-popover-content {
+	border: 2px solid transparent;
+	border-image: linear-gradient(to top, #614a1f 0, #463714 5px, #463714 100%)
+		1 stretch;
+	background-color: #010a13;
+	box-shadow: 0 0 0 1px rgba(1, 10, 19, 0.48);
+	max-width: 300px;
+	position: relative;
+}
+.LOLPopover .ant-popover-content::before {
+	content: "";
+	position: absolute;
+	width: calc(100% - 8px);
+	height: 0;
+	border-style: solid;
+	border-image-source: url(//game.gtimg.cn/images/lol/client/lcu/tooltip-sub-border-horizontal.png);
+	border-width: 4px 4px 0 4px;
+	border-image-width: 4px 4px 0 4px;
+	border-image-slice: 4 4 0 4;
+	border-image-repeat: stretch;
+
+	left: 50%;
+	top: calc(100% + 2px);
+	transform: translateX(-50%);
+}
+.LOLPopover .ant-popover-content::after {
+	content: "";
+	position: absolute;
+	width: 24px;
+	height: 15px;
+	background: url(//game.gtimg.cn/images/lol/client/lcu/tooltip-caret.png)
+		center no-repeat;
+	left: calc(50% - 12px);
+	top: 100%;
+	transform-origin: center center;
+}
+.LOLPopover .ant-popover-content .ant-popover-inner {
+	background: none;
+}
+.LOLPopover .ant-popover-content .text-content {
+	color: #737373;
+	font-size: 14px;
+}
+.LOLPopover .ant-popover-content .text-title {
+	font-size: 16px;
+	color: #c8aa6e;
+}
+
+.LOLPopover .ant-popover-content .ant-popover-arrow {
+	display: none;
+}
+
+.LOLPopover .ant-popover-content .text-title.DOMINATION {
+	color: #d44242;
+}
+.LOLPopover .ant-popover-content .text-title.PRECISION {
+	color: #c8aa6e;
+}
+.LOLPopover .ant-popover-content .text-title.SORCERY {
+	color: #9faafc;
+}
+.LOLPopover .ant-popover-content .text-title.RESOLVE {
+	color: #a1d586;
+}
+.LOLPopover .ant-popover-content .text-title.INSPIRATION {
+	color: #49aab9;
+}
+/*DOMINATION PRECISION SORCERY RESOLVE INSPIRATION*/

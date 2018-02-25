@@ -1,3 +1,8 @@
+.positionTab {
+	max-width: 1200px;
+	margin: 50px auto 50px;
+}
+
 .playerList {
 	display: flex;
 	flex-wrap: wrap;
@@ -7,10 +12,11 @@
 	display: flex;
 	flex-direction: column;
 	text-align: center;
+	width: 16.6%;
 }
 .player .playerImg {
-	width: 100px;
-	height: 100px;
+	width: 150px;
+	height: 150px;
 }
 .playerName {
 	color: #fff;
@@ -37,4 +43,19 @@ li > a {
 
 .ant-tabs-nav-scroll {
 	text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+	.ant-tabs-nav .ant-tabs-tab {
+		margin: 0 10px 0 0;
+	}
+
+	.player {
+		width: 50%;
+	}
+}
+@media screen and (max-width: 375px) {
+	.ant-tabs-nav .ant-tabs-tab {
+		margin: 0 3px 0 0;
+	}
 }

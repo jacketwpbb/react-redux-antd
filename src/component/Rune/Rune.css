@@ -1,0 +1,79 @@
+.items-box {
+	display: flex;
+	margin: 0;
+}
+.rune-image {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	margin-bottom: 20px;
+	margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+	.rune-image {
+		width: 50px;
+		height: 50px;
+	}
+}
+.rune-image:nth-child(2)::before {
+	display: block;
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	border-radius: 50%;
+	border: 2px solid #d0bf67;
+	background: #2d2d2d;
+	z-index: 0;
+}
+.rune-item {
+}
+.rune-image img {
+	position: relative;
+	border: 2px solid #d0bf67;
+	border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: columns;
+}
+
+.rune-image span {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	font-size: 12px;
+}
+.rune-image.DOMINATION img,
+.rune-image.DOMINATION:nth-child(2)::before {
+	border: 2px solid #c63e40;
+}
+.rune-image.PRECISION img,
+.rune-image.PRECISION:nth-child(2)::before {
+	border: 2px solid #d0bf67;
+}
+.rune-image.SORCERY img,
+.rune-image.SORCERY:nth-child(2)::before {
+	border: 2px solid #9faafc;
+}
+.rune-image.RESOLVE img,
+.rune-image.RESOLVE:nth-child(2)::before {
+	border: 2px solid #a1d586;
+}
+.rune-image.INSPIRATION img,
+.rune-image.INSPIRATION:nth-child(2)::before {
+	border: 2px solid #49aab9;
+}
+
+.rune-image.keyStone img {
+	position: relative;
+	border: 0;
+	transform: scale(1.2);
+}
+
+/*DOMINATION PRECISION SORCERY RESOLVE INSPIRATION*/
+

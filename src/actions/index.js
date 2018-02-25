@@ -3,6 +3,10 @@ import axios from "axios";
 export const FETCH_PLAYERS = "fetch_players";
 export const FETCH_PLAYER_MATCH_LIST = "fetch_player_list";
 
+export const PENDING = "_PENDING";
+export const FULFILLED = "_FULFILLED";
+export const REJECTED = "_REJECTED";
+
 const ROOT_URL = "/lolapi/api";
 
 export function fetchPlayers() {

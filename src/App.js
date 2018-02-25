@@ -8,6 +8,8 @@ import PositionTab from "../src/component/PositionTab/index.js";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import ChampionList from "../src/component/ChampionList/index.js";
+
 class App extends Component {
   render() {
     return (
@@ -19,6 +21,8 @@ class App extends Component {
               <Route path="/home" component={Home} />
               <Route path="/players/:MemberId" component={PlayerDetail} />
               <Route path="/players" component={PositionTab} />
+
+              <Route exact path="/championList" component={ChampionList} />
             </Switch>
           </div>
         </Router>

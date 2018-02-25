@@ -3,15 +3,37 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchPlayerMatchList } from "../../actions/index.js";
 
-import { Collapse, Icon } from "antd";
+import { Collapse, Icon, Spin, Row, Col } from "antd";
+
+import Search from "../CInput/index.js";
 
 import "./PlayerDetail.css";
 
-import rune from "../../lolJSON/runes.json";
+import Rune from "../Rune/index.js";
+
+import ChampionStats from "../ChampionStats/index.js";
+
+import { mapKey } from "../../util/index.js";
+
+import championJson from "../../lolJSON/champion.json";
+import summonerJson from "../../lolJSON/summoner.json";
+import itemJson from "../../lolJSON/item.json";
+
+import LOLPopover from "../LOLPopover/index.js";
+
+const championMap = mapKey(championJson.data, "key");
+const summonerMap = mapKey(summonerJson.data, "key");
 
 const Panel = Collapse.Panel;
 
 class PlayerDetail extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchFilterValue: ""
+		};
+	}
+
 	componentDidMount() {
 		this.props.fetchPlayerMatchList(this.props.match.params.MemberId);
 	}
@@ -21,156 +43,105 @@ class PlayerDetail extends Component {
 			items.push(equip[key]);
 		}
 
-		const lis = items.map(itemId => (
-			<li className="item-img" key={itemId}>
-				<img
-					src={`http://ossweb-img.qq.com/images/lol/img/item/${
-						itemId
-					}.png`}
-					alt=""
-				/>
+		const lis = items.map((itemId, idx) => (
+			<li className="item-img" key={idx}>
+				{itemId ? (
+					<LOLPopover
+						title={itemJson.data[itemId].name}
+						content={
+							<div
+								dangerouslySetInnerHTML={{
+									__html: itemJson.data[itemId].description
+								}}
+							/>
+						}
+					>
+						<img
+							src={`http://ossweb-img.qq.com/images/lol/img/item/${
+								itemId
+							}.png`}
+							alt={itemJson.data[itemId].name}
+						/>
+					</LOLPopover>
+				) : (
+					<img
+						src="https://static.tuwan.com/templet/lol/hd/hfzhcx/image/itemplaceholder.jpg"
+						alt="空"
+					/>
+				)}
 			</li>
 		));
 
-		const summonerSepll = window.LOLsummonerjs.data;
-		const summonerMap = {};
-		for (let key in summonerSepll) {
-			summonerMap[summonerSepll[key].key] = summonerSepll[key].id;
-		}
+		// heroInfo.runes_info_.runes_list_
 
-		const runeMap = {};
-		const treeNameMap = {
-			坚决: 4,
-			巫术: 3,
-			启迪: 5,
-			精密: 1,
-			主宰: 2
-		};
-		rune.styles.forEach(({ slots, name }) => {
-			slots.forEach(({ runes }) => {
-				runes.forEach(rune => {
-					runeMap[rune.runeId] = {
-						...rune,
-						tree: treeNameMap[name],
-						treeName: name
-					};
-				});
-			});
-		});
+		const summonerdata = summonerJson.data;
 
-		console.log(runeMap, runeMap[8359]);
+		const spell1 = summonerMap[heroInfo.spells_info_.spells_list_[0]];
+		const spell2 = summonerMap[heroInfo.spells_info_.spells_list_[1]];
 
-		function getTreeClassName(tree) {
-			switch (tree) {
-				case 1:
-					return "PRECISION";
-				case 2:
-					return "DOMINATION";
-				case 3:
-					return "SORCERY";
-				case 4:
-					return "RESOLVE";
-				case 5:
-					return "INSPIRATION";
-				default:
-					return "";
-			}
-		}
+		const spell1Title = summonerdata[spell1].name;
+		const spell2Title = summonerdata[spell2].name;
 
-		const runes = heroInfo.runes_info_.runes_list_.map(({ runes_id_ }) => (
-			<li
-				className={`rune-image ${getTreeClassName(
-					runeMap[runes_id_].tree
-				)}`}
-				key={runes_id_}
-			>
-				<img
-					src={`http://lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${
-						runes_id_
-					}.png`}
-					alt={runes_id_}
-				/>
-			</li>
-		));
-
-		runes.splice(
-			0,
-			0,
-			<li
-				className={`rune-image ${getTreeClassName(
-					runeMap[heroInfo.runes_info_.runes_list_[0].runes_id_].tree
-				)}`}
-				key="aa"
-			>
-				<img
-					src={`http://lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
-						runeMap[heroInfo.runes_info_.runes_list_[0].runes_id_]
-							.tree
-					).toLowerCase()}/icon-${getTreeClassName(
-						runeMap[heroInfo.runes_info_.runes_list_[0].runes_id_]
-							.tree
-					)
-						.toLowerCase()
-						.slice(0, 1)}-36x36.png`}
-					alt=""
-				/>
-			</li>
-		);
-
-		runes.splice(
-			5,
-			0,
-			<li className="rune-image" key="bb">
-				<img
-					src={`http://lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
-						runeMap[heroInfo.runes_info_.runes_list_[4].runes_id_]
-							.tree
-					).toLowerCase()}/icon-${getTreeClassName(
-						runeMap[heroInfo.runes_info_.runes_list_[4].runes_id_]
-							.tree
-					)
-						.toLowerCase()
-						.slice(0, 1)}-36x36.png`}
-					alt=""
-				/>
-			</li>
-		);
+		const spell1Content = summonerdata[spell1].description;
+		const spell2Content = summonerdata[spell2].description;
 
 		return (
 			<div className="heroInfo">
-				<div className="heroInfo-items">
-					<div className="heroInfo-title">召唤师技能</div>
-					<ul className="items-box">
-						<li className="item-img">
-							<img
-								src={`http://ossweb-img.qq.com/images/lol/img/spell/${
-									summonerMap[
-										heroInfo.spells_info_.spells_list_[0]
-									]
-								}.png`}
-								alt=""
-							/>
-						</li>
-						<li className="item-img">
-							<img
-								src={`http://ossweb-img.qq.com/images/lol/img/spell/${
-									summonerMap[
-										heroInfo.spells_info_.spells_list_[1]
-									]
-								}.png`}
-								alt=""
-							/>
-						</li>
-					</ul>
-				</div>
-				<div className="heroInfo-items">
-					<div className="heroInfo-title">出装</div>
-					<ul className="items-box">{lis}</ul>
-				</div>
-				<div className="heroInfo-items">
-					<div className="heroInfo-title">符文</div>
-					<ul className="items-box">{runes}</ul>
-				</div>
+				<Row className="heroInfo-items" type="flex" justify="center">
+					<Col xs={20} md={4} className="heroInfo-title">
+						召唤师技能
+					</Col>
+					<Col xs={20} md={12}>
+						<ul className="items-box">
+							<li className="item-img">
+								<LOLPopover
+									title={spell1Title}
+									content={spell1Content}
+								>
+									<img
+										src={`http://ossweb-img.qq.com/images/lol/img/spell/${
+											spell1
+										}.png`}
+										alt=""
+									/>
+								</LOLPopover>
+							</li>
+							<li className="item-img">
+								<LOLPopover
+									title={spell2Title}
+									content={spell2Content}
+								>
+									<img
+										src={`http://ossweb-img.qq.com/images/lol/img/spell/${
+											spell2
+										}.png`}
+										alt=""
+									/>
+								</LOLPopover>
+							</li>
+						</ul>
+					</Col>
+				</Row>
+				<Row className="heroInfo-items" type="flex" justify="center">
+					<Col xs={20} md={4} className="heroInfo-title">
+						出装
+					</Col>
+					<Col xs={20} md={12}>
+						<ul className="items-box">{lis}</ul>
+					</Col>
+				</Row>
+				<Row
+					className="heroInfo-items rune-item"
+					type="flex"
+					justify="center"
+				>
+					<Col xs={20} md={4} className="heroInfo-title">
+						符文
+					</Col>
+					<Col xs={20} md={12}>
+						<Rune runeList={heroInfo.runes_info_.runes_list_} />
+					</Col>
+				</Row>
 			</div>
 		);
 	}
@@ -184,20 +155,18 @@ class PlayerDetail extends Component {
 			} = this.props.matchList[0].BattlePlayer.memberInfo;
 
 			return (
-				<div className="header">
-					<div className="imagesBox">
-						<div className="left" />
-						<div className="right" />
-						<div
-							className="player"
-							style={{
-								backgroundImage: `url(${UserPhoto550})`
-							}}
-						>
-							<div className="playerInfo">
-								<p className="enName">{NickName}</p>
-								<p className="RealName">{RealName}</p>
-							</div>
+				<div className="imagesBox">
+					<div className="left" />
+					<div className="right" />
+					<div
+						className="player"
+						style={{
+							backgroundImage: `url(${UserPhoto550})`
+						}}
+					>
+						<div className="playerInfo">
+							<p className="enName">{NickName}</p>
+							<p className="RealName">{RealName}</p>
 						</div>
 					</div>
 				</div>
@@ -206,83 +175,131 @@ class PlayerDetail extends Component {
 	}
 
 	renderMatchList() {
-		if (this.props.matchList.length > 0) {
-			const numMap = {
-				第一场: " 1",
-				第二场: " 2",
-				第三场: " 3",
-				第四场: " 4",
-				第五场: " 5"
-			};
-			return this.props.matchList.map(
-				(
-					{
-						ChampionId,
-						bMatchName,
-						sUpdated,
-						Game_K,
-						Game_D,
-						Game_A,
-						sMatchName,
-						BattlePlayer
-					},
-					idx
-				) => {
-					return (
-						<Panel
-							header={
-								<div className="matchList-item">
-									<Icon type="down" className="down-icon" />
-									<img
-										src={`//ossweb-img.qq.com/images/lol/img/champion/${
-											window.LOLherojs.champion.keys[
-												ChampionId
-											]
-										}.png`}
-										alt={
-											window.LOLherojs.champion.keys[
-												ChampionId
-											]
-										}
-										className="championImage"
-									/>
+		const searchFilterValue = this.state.searchFilterValue;
 
-									<div className="matchName">
-										<span className="tinyText">对局</span>
-										<span>
-											{bMatchName}
-											{numMap[sMatchName]}
-										</span>
-									</div>
+		const numMap = {
+			第一场: " 1",
+			第二场: " 2",
+			第三场: " 3",
+			第四场: " 4",
+			第五场: " 5"
+		};
 
-									<div className="matchTime">
-										<span className="tinyText">时间</span>
-										<span>{sUpdated.split("T")[0]}</span>
-									</div>
+		const filteredList = this.props.matchList.filter(match => {
+			const { id, key, name, title } = championJson.data[
+				championMap[match.ChampionId]
+			];
 
-									<div className="KDA">
-										<span className="tinyText">KDA</span>
-										<span>{`${Game_K}/${Game_D}/${
-											Game_A
-										}`}</span>
-									</div>
-								</div>
-							}
-							className=""
-							key={idx}
-						>
-							{this.renderTabContent(BattlePlayer)}
-						</Panel>
-					);
-				}
+			const championName = id + key + name + title;
+
+			console.log(championName.search(searchFilterValue));
+			return (
+				championName
+					.toLowerCase()
+					.search(searchFilterValue.toLowerCase()) !== -1
+			);
+		});
+
+		if (filteredList.length === 0) {
+			return (
+				<Panel
+					header={
+						<div className="matchList-item no-stats">
+							暂无数据或关键词错误
+						</div>
+					}
+					disabled={true}
+				/>
 			);
 		}
+
+		return filteredList.map(
+			(
+				{
+					ChampionId,
+					bMatchName,
+					sUpdated,
+					Game_K,
+					Game_D,
+					Game_A,
+					sMatchName,
+					BattlePlayer
+				},
+				idx
+			) => {
+				return (
+					<Panel
+						header={
+							<div className="matchList-item">
+								<Icon type="down" className="down-icon" />
+								<div
+									className={`championImageBox ${
+										BattlePlayer.win ? "win" : "loss"
+									}`}
+								>
+									<div className="championImage">
+										<img
+											src={`//ossweb-img.qq.com/images/lol/img/champion/${
+												championMap[ChampionId]
+											}.png`}
+											alt={championMap[ChampionId]}
+										/>
+									</div>
+								</div>
+
+								<div className="matchName">
+									<span className="tinyText">对局</span>
+									<span>
+										{bMatchName}
+										{numMap[sMatchName]}
+									</span>
+								</div>
+
+								<div className="matchTime">
+									<span className="tinyText">时间</span>
+									<span>{sUpdated.split("T")[0]}</span>
+								</div>
+
+								<div className="KDA">
+									<span className="tinyText">KDA</span>
+									<span>{`${Game_K}/${Game_D}/${
+										Game_A
+									}`}</span>
+								</div>
+							</div>
+						}
+						className=""
+						key={idx}
+					>
+						{this.renderTabContent(BattlePlayer)}
+					</Panel>
+				);
+			}
+		);
 	}
+
+	handleChange(event) {
+		this.setState({ searchFilterValue: event.target.value });
+	}
+
 	render() {
+		const antIcon = <Icon type="loading" style={{ fontSize: 50 }} spin />;
 		return (
 			<div className="PlayerDetail">
-				{this.renderHeader()}
-				<h3 className="matchList-title">MATCH HISTORY</h3>
+				<Spin indicator={antIcon} spinning={this.props.isFetching}>
+					<div className="header">{this.renderHeader()}</div>
+				</Spin>
+				<h3 className="matchList-title">英雄数据</h3>
+				<ChampionStats matchList={this.props.matchList} />
+				<div className="searchBox">
+					<h3 className="matchList-title">比赛记录</h3>
+					<Search
+						placeholder="输入英雄的中文/英文名称"
+						onChange={this.handleChange.bind(this)}
+						className="filterInput"
+					/>
+				</div>
+
 				<Collapse
 					className="matchList"
 					bordered={false}
@@ -295,8 +312,8 @@ class PlayerDetail extends Component {
 	}
 }
 
-function mapStateToProps({ matchList }) {
-	return { matchList };
+function mapStateToProps({ matchList, isFetching }) {
+	return { matchList, isFetching: isFetching.matchListPending };
 }
 
 export default connect(mapStateToProps, { fetchPlayerMatchList })(PlayerDetail);

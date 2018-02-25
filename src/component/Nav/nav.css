@@ -20,6 +20,9 @@ body {
 	padding: 0 20px;
 	border-bottom: 2px solid transparent;
 }
+.nav > a:hover {
+	color: #fff;
+}
 .nav > a:focus {
 	text-decoration: none;
 }
