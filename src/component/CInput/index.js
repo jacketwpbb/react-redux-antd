@@ -1,5 +1,6 @@
 import React from "react";
 import { Input } from "antd";
+import "./Cinput.css";
 
 const Search = Input.Search;
 

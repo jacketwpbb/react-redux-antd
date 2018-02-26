@@ -21,7 +21,7 @@ p {
 	padding: 0;
 	margin: 0;
 }
-.header {
+.PlayerDetail .header {
 	background-position: 0 100%;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -29,57 +29,61 @@ p {
 	background-color: #050808;
 }
 
-.header .imagesBox,
-.imagesBox > div {
+.PlayerDetail .header .imagesBox,
+.PlayerDetail .imagesBox > div {
 	width: 100%;
 	height: 100%;
 	position: relative;
 }
 
-.imagesBox > div {
+.PlayerDetail .imagesBox > div {
 	position: absolute;
 	background-repeat: no-repeat;
 }
-.imagesBox > .player {
+.PlayerDetail .imagesBox > .player {
 	max-width: 1200px;
 	left: 50%;
 	transform: translateX(-50%);
 	background-position: 10% 100%;
 }
-.imagesBox > .left {
+.PlayerDetail .imagesBox > .left {
 	background-image: url("../../assets/magic-blue-left-L.jpg");
 	background-position: 0 100%;
 }
-.imagesBox > .right {
+.PlayerDetail .imagesBox > .right {
 	background-image: url("../../assets/magic-blue-right-L.jpg");
 	background-position: 100% 100%;
 }
 
-.playerInfo {
-	/*font-family: "TradeGothic", "微软雅黑";*/
+.PlayerDetail .playerInfo {
 	color: #fff;
 	font-size: 40px;
 	text-align: right;
-	margin-top: 200px;
+	margin-top: 120px;
 	margin-right: 50px;
 }
 
-.playerInfo .enName {
+.PlayerDetail .player-position-icon {
+	width: 80px;
+	height: 80px;
+	margin-top: 10px;
+}
+.PlayerDetail .playerInfo .enName {
 	font-size: 75px;
 }
 
-.championImageBox {
+.PlayerDetail .championImageBox {
 	position: relative;
 }
-.championImage {
+.PlayerDetail .championImage {
 	width: 90px;
 	height: 90px;
 	border-radius: 50%;
 	overflow: hidden;
 }
 
-.championImageBox.win::before,
-.championImageBox.loss::before {
+.PlayerDetail .championImageBox.win::before,
+.PlayerDetail .championImageBox.loss::before {
 	content: "胜";
 	display: block;
 	position: absolute;
@@ -98,32 +102,32 @@ p {
 	box-sizing: border-box;
 }
 
-.championImageBox.loss::before {
+.PlayerDetail .championImageBox.loss::before {
 	content: "负";
 
 	border: 2px solid #b7374b;
 	color: #b7374b;
 }
-.championImage img {
+.PlayerDetail .championImage img {
 	width: calc(100% + 8px);
 	height: calc(100% + 8px);
 	margin-left: -4px;
 	margin-top: -4px;
 }
-.matchList {
+.PlayerDetail .matchList {
 	max-width: 1200px;
 	margin: 0 auto;
 	min-height: 500px;
 }
 
-.matchList-title {
+.PlayerDetail .matchList-title {
 	font-size: 48px;
 	color: #fff;
 	font-weight: bold;
 	text-align: center;
 	margin: 10px 0;
 }
-.matchList-item {
+.PlayerDetail .matchList-item {
 	display: flex;
 	justify-content: space-around;
 	height: 124px;
@@ -131,14 +135,14 @@ p {
 	align-items: center;
 }
 
-.matchList-item:last {
+.PlayerDetail .matchList-item:last {
 	border-bottom: 1px solid #444b52;
 }
-.matchList-item .tinyText {
+.PlayerDetail .matchList-item .tinyText {
 	color: #444b52;
 	font-size: 16px;
 }
-.matchList-item > div {
+.PlayerDetail .matchList-item > div {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -147,43 +151,43 @@ p {
 	font-size: 19px;
 }
 
-.ant-collapse-borderless {
+.PlayerDetail .ant-collapse-borderless {
 	background: transparent;
 }
-.ant-collapse-header {
+.PlayerDetail .ant-collapse-header {
 	width: 100%;
 }
-.ant-collapse-borderless > .ant-collapse-item {
+.PlayerDetail .ant-collapse-borderless > .ant-collapse-item {
 	border: 0;
 }
-.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+.PlayerDetail .ant-collapse > .ant-collapse-item > .ant-collapse-header {
 	padding: 0;
 }
 
-.ant-tabs {
+.PlayerDetail .ant-tabs {
 	color: #fff;
 }
-.arrow {
+.PlayerDetail .arrow {
 	display: none;
 }
-.tab-content {
+.PlayerDetail .tab-content {
 	color: #fff;
 }
 
-.down-icon {
+.PlayerDetail .down-icon {
 	font-size: 20px;
 	color: #fff;
 	transition: all 0.3s;
 }
-.ant-collapse-item-active .down-icon {
+.PlayerDetail .ant-collapse-item-active .down-icon {
 	transform: rotate(180deg);
 }
 
-.heroInfo {
+.PlayerDetail .heroInfo {
 	/* max-width: 700px;
 	margin: 0 auto; */
 }
-.heroInfo-items {
+.PlayerDetail .heroInfo-items {
 	/* 	display: flex;
 	align-items: center; */
 
@@ -192,90 +196,74 @@ p {
 	font-weight: bold;
 	margin: 0 0 20px 0;
 }
-.heroInfo-title {
+.PlayerDetail .heroInfo-title {
 }
-.item-img {
+.PlayerDetail .item-img {
 	width: 64px;
 	height: 64px;
 }
-.item-img img {
+.PlayerDetail .item-img img {
 	width: 100%;
 }
-.searchBox {
-	max-width: 1200px;
+
+.PlayerDetail .no-stats {
+	color: #fff;
 	margin: 0 auto;
-	position: relative;
-}
-.searchBox .filterInput {
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-	border-radius: 0;
-	width: 250px;
-	height: 35px;
-}
-.ant-input {
-	outline: none;
-	background: #010913;
-	background-position: center left 7px;
-	background-size: 17px;
-	background-repeat: no-repeat;
-	border: 1px solid #5d471d;
-	color: #fff;
 }
 
-.ant-input-affix-wrapper:hover .ant-input:not(.ant-input-disabled),
-.ant-input:focus,
-.ant-input:hover {
-	border-color: #c79a3c;
-	box-shadow: none;
-}
-
-.ant-input-search-icon {
-	color: rgb(147, 149, 151);
-}
-
-.no-stats {
-	color: #fff;
-}
 @media screen and (max-width: 768px) {
-	.item-img {
+	.PlayerDetail .item-img {
 		width: 50px;
 		height: 50px;
 	}
-	.championImage {
+	.PlayerDetail .championImage {
 		width: 60px;
 		height: 60px;
 	}
-	.matchList-item > div {
+	.PlayerDetail .matchList-item > div {
 		font-size: 12px;
 	}
-	.heroInfo-items {
+	.PlayerDetail .heroInfo-items {
 		font-size: 14px;
 	}
-	.header {
+	.PlayerDetail .header {
 		height: 360px;
 	}
-	.imagesBox > .right {
+	.PlayerDetail .imagesBox > .right {
 		display: none;
 	}
-	.imagesBox > .player {
+	.PlayerDetail .imagesBox > .player {
 		background-position: -20px 100%;
 		-webkit-background-size: contain;
 		background-size: contain;
 	}
-	.playerInfo {
-		margin-top: 150px;
+	.PlayerDetail .playerInfo {
+		margin-top: 100px;
 		margin-right: 20px;
 		text-shadow: black 2px 2px;
 	}
-	.searchBox {
+	.PlayerDetail .playerInfo .enName {
+		font-size: 45px;
+	}
+
+	.PlayerDetail .RealName .enName {
+		font-size: 25px;
+	}
+
+	.PlayerDetail .searchBox {
 		margin-bottom: 50px;
 	}
-	.searchBox .filterInput {
+	.PlayerDetail .searchBox .filterInput {
 		top: 100%;
 		right: 50%;
 		transform: translateX(50%);
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.PlayerDetail .imagesBox > .player {
+		background-position: -70px 100%;
+		-webkit-background-size: contain;
+		background-size: contain;
 	}
 }

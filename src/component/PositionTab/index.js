@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 
 import { fetchPlayers } from "../../actions/index.js";
 
-import { Tabs } from "antd";
+import { Tabs, Icon } from "antd";
 
 import { Link } from "react-router-dom";
+
+import { positionArr } from ".././../util/index.js";
 
 import "./PositionTab.css";
 
@@ -25,7 +27,6 @@ class SlidingTabsDemo extends React.Component {
     const filteredPlayers = this.props.players.filter(
       ({ GamePlace }) => parseInt(GamePlace, 10) === place
     );
-    console.log("filteredPlayers", this.props.players);
     return filteredPlayers.map(({ NickName, MemberId, UserIcon, RealName }) => {
       return (
         <li className="player" key={MemberId}>
@@ -43,17 +44,19 @@ class SlidingTabsDemo extends React.Component {
     });
   }
   renderTabs() {
-    const positionArr = [
-      { Place: 1, CNName: "上单" },
-      { Place: 2, CNName: "中单" },
-      { Place: 3, CNName: "ADC" },
-      { Place: 4, CNName: "辅助" },
-      { Place: 5, CNName: "打野" }
-    ];
-
-    return positionArr.map(({ Place, CNName }) => {
+    return positionArr.map(({ Place, CNName, ENName }) => {
       return (
-        <TabPane tab={CNName} key={Place}>
+        <TabPane
+          tab={
+            <span className="tabTitle">
+              <svg className="filter-button--icon">
+                <use xlinkHref={`#icon-position-${ENName}`} />
+              </svg>
+              {CNName}
+            </span>
+          }
+          key={Place}
+        >
           <ul className="playerList">{this.renderPlayersByPosition(Place)}</ul>
         </TabPane>
       );
@@ -62,17 +65,25 @@ class SlidingTabsDemo extends React.Component {
   render() {
     return (
       <div className="positionTab">
-        <Tabs defaultActiveKey="1" tabPosition="top">
-          {this.renderTabs()}
-        </Tabs>
+        {this.props.isFetching ? (
+          <div className="loading">
+            <Icon type="loading" style={{ fontSize: 50 }} spin />
+            <div>loading...</div>
+          </div>
+        ) : (
+          <Tabs defaultActiveKey="1" tabPosition="top">
+            {this.renderTabs()}
+          </Tabs>
+        )}
       </div>
     );
   }
 }
 
-function mapStateToProps({ players }) {
+function mapStateToProps({ players, playersPending }) {
   return {
-    players
+    players,
+    isFetching: playersPending
   };
 }
 

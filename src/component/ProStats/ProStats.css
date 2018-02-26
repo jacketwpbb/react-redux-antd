@@ -1,0 +1,49 @@
+.proStats {
+	color: #fff;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+.proStats .championStats-title {
+	text-align: center;
+	font-size: 18px;
+	margin-bottom: 20px;
+}
+
+.proStats .championItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 200px;
+	margin: 0 auto 10px;
+}
+
+.proStats .champion-des {
+}
+
+.proStats .champion-icon {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 80px;
+}
+
+.proStats .champion-icon img {
+	width: 40px;
+	height: 40px;
+}
+
+.proStats .championItem:first-child .champion-icon img {
+	width: 60px;
+	height: 60px;
+}
+
+.proStats .championItem:first-child .champion-des .player-game-name {
+	font-size: 18px;
+}
+
+.proStats.no-stats {
+	text-align: center;
+	margin: 50px auto;
+}
+

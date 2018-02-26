@@ -42,19 +42,6 @@ const Rune = ({ runeList }) => {
 		}
 	}
 
-	function renderRuneContent(runeId, treeName) {
-		return (
-			<div>
-				<div className={`text-title ${treeName}`}>
-					{runeMap[runeId].name}
-				</div>
-				<div className="text-content">
-					{runeMap[runeId].shortDescription}
-				</div>
-			</div>
-		);
-	}
-
 	const runes = runeList.map(({ runes_id_ }, idx) => {
 		const treeName = getTreeClassName(runeMap[runes_id_].tree);
 		return (

@@ -1,5 +1,6 @@
 import {
 	FETCH_PLAYER_MATCH_LIST,
+	FETCH_CHAMPION_MATCH_LIST,
 	FETCH_PLAYERS,
 	FULFILLED,
 	PENDING,
@@ -14,6 +15,13 @@ export default function(state = {}, action) {
 		case FETCH_PLAYER_MATCH_LIST + FULFILLED:
 		case FETCH_PLAYER_MATCH_LIST + REJECTED:
 			return { ...state, matchListPending: false };
+
+		case FETCH_CHAMPION_MATCH_LIST + PENDING:
+			return { ...state, championMatchListPending: true };
+
+		case FETCH_CHAMPION_MATCH_LIST + FULFILLED:
+		case FETCH_CHAMPION_MATCH_LIST + REJECTED:
+			return { ...state, championMatchListPending: false };
 
 		case FETCH_PLAYERS + PENDING:
 			return { ...state, matchListPending: true };

@@ -1,18 +1,310 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 
-import "./ChampionList.css"
-class ChampionList extends Component{
+import { Row, Col } from "antd";
 
-	render(){
+import CInput from "../CInput/index.js";
+import { Link } from "react-router-dom";
 
-		return (
-				
-			<div className="championList">ChampionList</div>
-		)
+import lolBackground from "../../assets/map-bg--full-sm.jpg";
 
+import { mapKey } from "../../util/index.js";
 
+import championJson from "../../lolJSON/champion.json";
+
+import positionJson from "../../lolJSON/position.json";
+
+import "./ChampionList.css";
+
+const championMap = mapKey(championJson.data, "key");
+
+class ChampionList extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			filterStr: "",
+			positionFilter: "",
+			championList: Object.keys(championMap)
+		};
 	}
+	handleSearchFilter(e) {
+		this.setState({
+			filterStr: e.target.value
+		});
+	}
+	handlePositionBtnClicked(e) {
+		function getParentNodeByTag(node, tagName) {
+			if (node.parentNode && node.parentNode.tagName) {
+				if (
+					node.parentNode.tagName.toLowerCase() ===
+					tagName.toLowerCase()
+				) {
+					return node.parentNode;
+				} else {
+					return getParentNodeByTag(node.parentNode, tagName);
+				}
+			} else {
+				return null;
+			}
+		}
 
+		const button = getParentNodeByTag(e.target, "button");
+		if (button) {
+			if (button.classList.contains("active")) {
+				button.classList.remove("active");
+
+				this.setState({
+					positionFilter: ""
+				});
+			} else {
+				const child = button.parentNode.childNodes;
+				for (let i = 0; i < child.length; i++) {
+					child[i].classList.remove("active");
+				}
+
+				button.classList.add("active");
+
+				this.setState({
+					positionFilter: button.dataset.filter
+				});
+			}
+		}
+	}
+	renderFilteredList() {
+		const searchFilterValue = this.state.filterStr;
+
+		//有输入关键字按关键过滤
+		const filteredKeyWordList = this.state.championList.filter(
+			ChampionId => {
+				const { id, key, name, title } = championJson.data[
+					championMap[ChampionId]
+				];
+
+				const championName = id + key + name + title;
+				return (
+					championName
+						.toLowerCase()
+						.indexOf(searchFilterValue.toLowerCase()) !== -1
+				);
+			}
+		);
+
+		//按位置过滤
+		const filteredList = filteredKeyWordList.filter(ChampionId => {
+			const { key } = championJson.data[championMap[ChampionId]];
+
+			const championArr = positionJson[this.state.positionFilter];
+			if (championArr) {
+				return championArr.indexOf(+key) !== -1;
+			}
+			return true;
+		});
+
+		if (filteredList.length === 0) {
+			return (
+				<div
+					style={{
+						textAlign: "center",
+						width: "100%",
+						marginTop: "50px",
+						fontSize: "20px"
+					}}
+				>
+					关键词错误 或 位置错误
+				</div>
+			);
+		}
+		return filteredList.map(championId => (
+			<Col
+				className="championLinkItem"
+				key={championId}
+				xs={6}
+				sm={4}
+				md={4}
+				lg={3}
+			>
+				<Link to={`/champions/${championMap[championId]}`}>
+					<div className="champion-thumbnail-frame">
+						<div
+							className="champion-thumbnail"
+							style={{
+								backgroundImage: `url('//lolstatic.tuwan.com/cdn/${
+									championJson.version
+								}/img/champion/${championMap[championId]}.png')`
+							}}
+						/>
+						<div className="champion-thumbnail--accents accent-top" />
+						<div className="champion-thumbnail--accents accent-bottom" />
+					</div>
+					<span className="champion-name">
+						{championJson.data[championMap[championId]].name}
+					</span>
+				</Link>
+			</Col>
+		));
+	}
+	render() {
+		return (
+			<div className="championList">
+				<div className="champion-grid--controls">
+					<Row
+						className="champion-grid--controls_inner"
+						type="flex"
+						justify="space-between"
+					>
+						<Col
+							className="champion-grid--filters"
+							md={8}
+							sm={24}
+							xs={24}
+						>
+							<div
+								className="filter-button-group filter-button-group--playstyle"
+								data-filter-group="playstyle"
+							>
+								<button
+									className="filter-button"
+									data-filter="top"
+									title="Top"
+									onClick={this.handlePositionBtnClicked.bind(
+										this
+									)}
+								>
+									<svg
+										className="filter-button--icon"
+										height="30"
+										width="30"
+									>
+										<use xlinkHref="#icon-position-top" />
+									</svg>
+								</button>
+								<button
+									className="filter-button"
+									data-filter="jungle"
+									title="Jungle"
+									onClick={this.handlePositionBtnClicked.bind(
+										this
+									)}
+								>
+									<svg
+										className="filter-button--icon"
+										height="30"
+										width="30"
+									>
+										<use xlinkHref="#icon-position-jungle" />
+									</svg>
+								</button>
+								<button
+									className="filter-button"
+									data-filter="middle"
+									title="Middle"
+									onClick={this.handlePositionBtnClicked.bind(
+										this
+									)}
+								>
+									<svg
+										className="filter-button--icon"
+										height="30"
+										width="30"
+									>
+										<use xlinkHref="#icon-position-middle" />
+									</svg>
+								</button>
+								<button
+									className="filter-button"
+									data-filter="bottom"
+									title="Bottom"
+									onClick={this.handlePositionBtnClicked.bind(
+										this
+									)}
+								>
+									<svg
+										className="filter-button--icon"
+										height="30"
+										width="30"
+									>
+										<use xlinkHref="#icon-position-bottom" />
+									</svg>
+								</button>
+								<button
+									className="filter-button"
+									data-filter="support"
+									title="Support"
+									onClick={this.handlePositionBtnClicked.bind(
+										this
+									)}
+								>
+									<svg
+										className="filter-button--icon"
+										height="30"
+										width="30"
+									>
+										<use xlinkHref="#icon-position-support" />
+									</svg>
+								</button>
+							</div>
+						</Col>
+						<Col
+							className="champion-grid--title"
+							md={8}
+							sm={24}
+							xs={24}
+						>
+							<h1>选择你的英雄！</h1>
+						</Col>
+						<Col
+							className="champion-grid--search"
+							md={8}
+							sm={24}
+							xs={24}
+						>
+							<CInput
+								type="text"
+								className="quicksearch"
+								placeholder="输入英雄的中文/英文名称"
+								onChange={this.handleSearchFilter.bind(this)}
+							/>
+						</Col>
+					</Row>
+				</div>
+				<div className="champion-grid--frame">
+					<Row
+						className="champion-grid list scroll"
+						type="flex"
+						justify="start"
+						align="top"
+					>
+						{this.renderFilteredList()}
+					</Row>
+					<div className="champion-grid--dial">
+						<div className="mask-frame frame-left">
+							<div className="dial-frame">
+								<div className="dial-frame--inner">
+									<svg height="900" width="900">
+										<use xlinkHref="#champion-grid-dial" />
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div className="mask-frame frame-right">
+							<div className="dial-frame">
+								<div className="dial-frame--inner">
+									<svg height="900" width="900">
+										<use xlinkHref="#champion-grid-dial" />
+									</svg>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div
+						className="champion-grid--bg"
+						data-video="https://runeforge.gg/wp-content/themes/rune_forge/imgs/orb-vid.mkv"
+					>
+						<img src={lolBackground} alt="" />
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
 
 export default ChampionList;

@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { fetchPlayerMatchList } from "../../actions/index.js";
+import { fetchChampionMatchList } from "../../actions/index.js";
 
 import { Collapse, Icon, Spin, Row, Col } from "antd";
 
 import Search from "../CInput/index.js";
 
-import "./PlayerDetail.css";
+import "./ChampionDetail.css";
 
 import Rune from "../Rune/index.js";
 
-import ChampionStats from "../ChampionStats/index.js";
+import ProStats from "../ProStats/index.js";
 
-import { mapKey, positionArr } from "../../util/index.js";
+import { mapKey } from "../../util/index.js";
 
 import championJson from "../../lolJSON/champion.json";
 import summonerJson from "../../lolJSON/summoner.json";
@@ -23,9 +23,6 @@ import LOLPopover from "../LOLPopover/index.js";
 
 const championMap = mapKey(championJson.data, "key");
 const summonerMap = mapKey(summonerJson.data, "key");
-
-const positionObj = {};
-positionArr.forEach(position => (positionObj[position.Place] = position));
 
 const Panel = Collapse.Panel;
 
@@ -38,7 +35,9 @@ class PlayerDetail extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchPlayerMatchList(this.props.match.params.MemberId);
+		this.props.fetchChampionMatchList(
+			championJson.data[this.props.match.params.ChampionName].key
+		);
 	}
 	renderTabContent({ equip, heroInfo }) {
 		const items = [];
@@ -165,42 +164,29 @@ class PlayerDetail extends Component {
 		);
 	}
 	renderHeader() {
-		if (this.props.matchList.length > 0) {
-			const {
-				NickName,
-				RealName,
-				UserPhoto550,
-				GamePlace
-			} = this.props.matchList[0].BattlePlayer.memberInfo;
+		const ChampionId =
+			championJson.data[this.props.match.params.ChampionName].key;
 
-			return (
-				<div className="imagesBox">
-					<div className="left" />
-					<div className="right" />
+		const { id, name, title } = championJson.data[championMap[ChampionId]];
+
+		return (
+			<div className="imagesBox">
+				<div className="champion">
 					<div
-						className="player"
+						className="champion-image-bg"
 						style={{
-							backgroundImage: `url(${UserPhoto550})`
+							backgroundImage: `url(//lolstatic.tuwan.com/cdn/img/champion/splash/${
+								id
+							}_0.jpg)`
 						}}
-					>
-						<div className="playerInfo">
-							<p className="enName">{NickName}</p>
-							<p className="RealName">{RealName}</p>
-							<p className="player-position-icon-box">
-								<svg className="player-position-icon">
-									<use
-										xlinkHref={`#icon-position-${
-											positionObj[parseInt(GamePlace, 10)]
-												.ENName
-										}`}
-									/>
-								</svg>
-							</p>
-						</div>
+					/>
+					<div className="playerInfo">
+						<p className="enName">{name}</p>
+						<p className="RealName">{title}</p>
 					</div>
 				</div>
-			);
-		}
+			</div>
+		);
 	}
 
 	renderMatchList() {
@@ -215,15 +201,18 @@ class PlayerDetail extends Component {
 		};
 
 		const filteredList = this.props.matchList.filter(match => {
-			const { id, key, name, title } = championJson.data[
-				championMap[match.ChampionId]
-			];
+			const {
+				EnName,
+				GameName,
+				RealName,
+				MemberId
+			} = match.BattlePlayer.memberInfo;
 
-			const championName = id + key + name + title;
+			const championName = EnName + GameName + RealName + MemberId;
 			return (
 				championName
 					.toLowerCase()
-					.search(searchFilterValue.toLowerCase()) !== -1
+					.indexOf(searchFilterValue.toLowerCase()) !== -1
 			);
 		});
 
@@ -266,11 +255,14 @@ class PlayerDetail extends Component {
 								>
 									<div className="championImage">
 										<img
-											src={`//ossweb-img.qq.com/images/lol/img/champion/${
-												championMap[ChampionId]
-											}.png`}
+											src={
+												BattlePlayer.memberInfo.UserIcon
+											}
 											alt={championMap[ChampionId]}
 										/>
+									</div>
+									<div className="batttlePlayerName">
+										{BattlePlayer.memberInfo.GameName}
 									</div>
 								</div>
 
@@ -310,10 +302,10 @@ class PlayerDetail extends Component {
 	}
 
 	render() {
-		const antIcon = <Icon type="loading" style={{ fontSize: 50 }} spin />;
 		return (
-			<div className="PlayerDetail">
+			<div className="championDetail">
 				<div className="header">{this.renderHeader()}</div>
+
 				{this.props.isFetching ? (
 					<div className="loading">
 						<Icon type="loading" style={{ fontSize: 50 }} spin />
@@ -321,12 +313,12 @@ class PlayerDetail extends Component {
 					</div>
 				) : (
 					<div>
-						<h3 className="matchList-title">英雄数据</h3>
-						<ChampionStats matchList={this.props.matchList} />
+						<h3 className="matchList-title">选手数据</h3>
+						<ProStats matchList={this.props.matchList} />
 						<div className="searchBox">
 							<h3 className="matchList-title">比赛记录</h3>
 							<Search
-								placeholder="输入英雄的中文/英文名称"
+								placeholder="输入选手的姓名/ID/战队"
 								onChange={this.handleChange.bind(this)}
 								className="filterInput"
 							/>
@@ -346,8 +338,13 @@ class PlayerDetail extends Component {
 	}
 }
 
-function mapStateToProps({ matchList, isFetching }) {
-	return { matchList, isFetching: isFetching.matchListPending };
+function mapStateToProps({ championMatchList, isFetching }) {
+	return {
+		matchList: championMatchList,
+		isFetching: isFetching.championMatchListPending
+	};
 }
 
-export default connect(mapStateToProps, { fetchPlayerMatchList })(PlayerDetail);
+export default connect(mapStateToProps, { fetchChampionMatchList })(
+	PlayerDetail
+);

@@ -9,7 +9,7 @@ import championJson from "../../lolJSON/champion.json";
 
 const keys = mapKey(championJson.data, "key");
 
-const championStats = ({ matchList }) => {
+const ChampionStats = ({ matchList }) => {
 	// console.log(matchList)
 
 	const heroSatus = {};
@@ -136,4 +136,4 @@ const championStats = ({ matchList }) => {
 	);
 };
 
-export default championStats;
+export default ChampionStats;

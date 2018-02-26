@@ -29,10 +29,25 @@ li > a {
 	color: #fff;
 }
 
+.tabTitle {
+	display: flex;
+	align-items: center;
+}
+.tabTitle .filter-button--icon {
+	width: 30px;
+	height: 30px;
+	opacity: 0.4;
+}
+
 .ant-tabs-nav .ant-tabs-tab-active,
 .ant-tabs-nav .ant-tabs-tab:hover,
 .player:hover .playerName {
 	color: #c79a3c;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active .filter-button--icon,
+.ant-tabs-nav .ant-tabs-tab:hover .filter-button--icon {
+	opacity: 0.9;
 }
 .ant-tabs-ink-bar {
 	background-color: #c79a3c;
@@ -53,9 +68,18 @@ li > a {
 	.player {
 		width: 50%;
 	}
+
+	.tabTitle {
+		flex-direction: column;
+	}
 }
 @media screen and (max-width: 375px) {
 	.ant-tabs-nav .ant-tabs-tab {
 		margin: 0 3px 0 0;
+	}
+
+	.tabTitle .filter-button--icon {
+		width: 20px;
+		height: 20px;
 	}
 }
