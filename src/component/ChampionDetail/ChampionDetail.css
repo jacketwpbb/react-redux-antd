@@ -15,7 +15,8 @@
 		"Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica,
 		Arial, sans-serif;
 
-	background: #101010;
+	background: #000c17;
+	min-height: 100vh;
 }
 p {
 	padding: 0;
@@ -26,7 +27,6 @@ p {
 	background-repeat: no-repeat;
 	background-size: contain;
 	height: 450px;
-	background-color: #050808;
 }
 .championDetail .imagesBox {
 	width: 100%;
@@ -65,7 +65,7 @@ p {
 		to right,
 		transparent 0%,
 		transparent 0px,
-		#050808
+		#000c17
 	);
 	top: 0;
 }
@@ -76,7 +76,7 @@ p {
 		to left,
 		transparent 0%,
 		transparent 0px,
-		#050808
+		#000c17
 	);
 }
 .championDetail .imagesBox > .champion .champion-image-bg::after {
@@ -298,6 +298,11 @@ p {
 		top: 100%;
 		right: 50%;
 		transform: translateX(50%);
+	}
+
+	.championDetail .imagesBox > .champion .champion-image-bg::before,
+	.championDetail .imagesBox > .champion .champion-image-bg::after {
+		display: none;
 	}
 }
 

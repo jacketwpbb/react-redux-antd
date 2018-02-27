@@ -1,8 +1,8 @@
-import { FETCH_CHAMPION_MATCH_LIST, FULFILLED } from "../actions/index.js";
+import { FETCH_ACTIVE_CHAMPION, FULFILLED } from "../actions/index.js";
 
 export default function(state = [], action) {
 	switch (action.type) {
-		case FETCH_CHAMPION_MATCH_LIST + FULFILLED:
+		case FETCH_ACTIVE_CHAMPION + FULFILLED:
 			return [...action.payload.data];
 
 		default:

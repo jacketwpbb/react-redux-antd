@@ -1,46 +1,31 @@
 import React, { Component } from "react";
 
-import { Row, Col, message } from "antd";
+import { Row, Col } from "antd";
 
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
 
 import lolBackground from "../../assets/map-bg--full-sm.jpg";
 
-import { mapKey } from "../../util/index.js";
-
-import championJson from "../../lolJSON/champion.json";
-
-import positionJson from "../../lolJSON/position.json";
-
-import { fetchActiveChampion } from "../../actions/index.js";
-
 import { connect } from "react-redux";
 
-import "./ChampionList.css";
+import { fetchPlayers } from "../../actions/index.js";
 
-//配置提示消息
-message.config({
-	top: 100,
-	duration: 2
-});
+import { positionArr } from ".././../util/index.js";
 
-const championMap = mapKey(championJson.data, "key");
+import "../ChampionList/ChampionList.css";
+import "./PlayerList.css";
 
-class ChampionList extends Component {
+class PlayerList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			filterStr: "",
-			positionFilter: "",
-			championList: Object.keys(championMap)
+			positionFilter: ""
 		};
 	}
-	componentWillMount() {
-		this.props.fetchActiveChampion();
-	}
-	showchampionMessage() {
-		message.warning("暂时没有选手使用这个英雄哦");
+	componentDidMount() {
+		this.props.fetchPlayers();
 	}
 	handleSearchFilter(e) {
 		this.setState({
@@ -89,30 +74,30 @@ class ChampionList extends Component {
 		const searchFilterValue = this.state.filterStr;
 
 		//有输入关键字按关键过滤
-		const filteredKeyWordList = this.state.championList.filter(
-			ChampionId => {
-				const { id, key, name, title } = championJson.data[
-					championMap[ChampionId]
-				];
 
-				const championName = id + key + name + title;
-				return (
-					championName
-						.toLowerCase()
-						.indexOf(searchFilterValue.toLowerCase()) !== -1
-				);
-			}
-		);
+		const filteredKeyWordList = this.props.players
+			? this.props.players.filter(
+					({ MemberId, GameName, RealName, EnName }) => {
+						const playerName =
+							GameName + MemberId + RealName + EnName;
+						return (
+							playerName
+								.toLowerCase()
+								.indexOf(searchFilterValue.toLowerCase()) !== -1
+						);
+					}
+				)
+			: [];
 
 		//按位置过滤
-		const filteredList = filteredKeyWordList.filter(ChampionId => {
-			const { key } = championJson.data[championMap[ChampionId]];
-
-			const championArr = positionJson[this.state.positionFilter];
-			if (championArr) {
-				return championArr.indexOf(+key) !== -1;
+		const filteredList = filteredKeyWordList.filter(({ GamePlace }) => {
+			if (!this.state.positionFilter) {
+				return true;
 			}
-			return true;
+			return (
+				positionArr[parseInt(GamePlace, 10) - 1].ENName ===
+				this.state.positionFilter
+			);
 		});
 
 		if (filteredList.length === 0) {
@@ -125,61 +110,40 @@ class ChampionList extends Component {
 						fontSize: "20px"
 					}}
 				>
-					关键词错误 或 位置错误
+					您输入的选手在本赛季暂未登场<br />
+					请确认输入正确的关键词、战队简称 或 选择了正确的位置
 				</div>
 			);
 		}
-
-		const activeChampions = this.props.activeChampions;
-
-		return filteredList.map(championId => (
+		return filteredList.map(({ NickName, UserIcon, MemberId }) => (
 			<Col
 				className="championLinkItem"
-				key={championId}
+				key={MemberId}
 				xs={6}
 				sm={4}
 				md={4}
 				lg={3}
-				order={activeChampions.indexOf(+championId) === -1 ? 10 : 0}
 			>
-				<Link
-					to={
-						activeChampions.indexOf(+championId) === -1
-							? "/champions"
-							: `/champions/${championMap[championId]}`
-					}
-					onClick={
-						activeChampions.indexOf(+championId) === -1
-							? this.showchampionMessage
-							: () => ""
-					}
-				>
+				<Link to={`/players/${MemberId}`}>
 					<div className="champion-thumbnail-frame">
 						<div
-							className={`champion-thumbnail ${
-								activeChampions.indexOf(+championId) === -1
-									? "disabled"
-									: ""
-							}`}
+							className="champion-thumbnail"
 							style={{
-								backgroundImage: `url('//lolstatic.tuwan.com/cdn/${
-									championJson.version
-								}/img/champion/${championMap[championId]}.png')`
+								backgroundColor: "",
+								backgroundImage: `url(${UserIcon})`
 							}}
 						/>
 						<div className="champion-thumbnail--accents accent-top" />
 						<div className="champion-thumbnail--accents accent-bottom" />
 					</div>
-					<span className="champion-name">
-						{championJson.data[championMap[championId]].name}
-					</span>
+					<span className="champion-name">{NickName}</span>
 				</Link>
 			</Col>
 		));
 	}
 	render() {
 		return (
-			<div className="championList">
+			<div className="championList playerList">
 				<div className="champion-grid--controls">
 					<Row
 						className="champion-grid--controls_inner"
@@ -284,7 +248,7 @@ class ChampionList extends Component {
 							sm={24}
 							xs={24}
 						>
-							<h1>选择一个英雄！</h1>
+							<h1>选择一位职业选手！</h1>
 						</Col>
 						<Col
 							className="champion-grid--search"
@@ -295,7 +259,7 @@ class ChampionList extends Component {
 							<CInput
 								type="text"
 								className="quicksearch"
-								placeholder="输入英雄的中文/英文名称"
+								placeholder="输入选手ID/姓名/战队简称"
 								onChange={this.handleSearchFilter.bind(this)}
 							/>
 						</Col>
@@ -342,10 +306,11 @@ class ChampionList extends Component {
 	}
 }
 
-function mapStateToProps({ activeChampions }) {
+function mapStateToProps({ players, playersPending }) {
 	return {
-		activeChampions
+		players,
+		isFetching: playersPending
 	};
 }
 
-export default connect(mapStateToProps, { fetchActiveChampion })(ChampionList);
+export default connect(mapStateToProps, { fetchPlayers })(PlayerList);

@@ -12,6 +12,9 @@ li {
 	list-style: none;
 }
 
+body {
+	background: url(assets/magic-repeater-sm.jpg) top repeat-y #010913 fixed;
+}
 .App-header {
 	background-color: #050808;
 	height: 30px;
@@ -30,4 +33,10 @@ li {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+}
+.ant-message {
+	color: #cccccc !important;
+}
+.ant-message-notice-content {
+	background: #484848 !important;
 }

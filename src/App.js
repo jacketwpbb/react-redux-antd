@@ -6,7 +6,8 @@ import Home from "../src/component/Home/index.js";
 import PlayerDetail from "../src/component/PlayerDetail/index.js";
 import ChampionDetail from "../src/component/ChampionDetail/index.js";
 
-import PositionTab from "../src/component/PositionTab/index.js";
+import PlayerList from "../src/component/PlayerList/index.js";
+// import PositionTab from "../src/component/PositionTab/index.js";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -22,7 +23,7 @@ class App extends Component {
             <Switch>
               <Route path="/home" component={Home} />
               <Route path="/players/:MemberId" component={PlayerDetail} />
-              <Route path="/players" component={PositionTab} />
+              <Route path="/players" component={PlayerList} />
               <Route
                 path="/champions/:ChampionName"
                 component={ChampionDetail}

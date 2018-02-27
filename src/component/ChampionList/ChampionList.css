@@ -5,6 +5,10 @@
 	max-width: 1050px;
 }
 
+.championList a:focus {
+	text-decoration: none;
+}
+
 .champion-grid--controls {
 	padding: 0 20px;
 }
@@ -127,7 +131,9 @@
 	right: 0;
 	opacity: 0;
 }
-
+.champion-grid a:hover {
+	filter: brightness(1.3);
+}
 .champion-grid a:hover .champion-thumbnail--accents {
 	opacity: 1;
 }
@@ -197,6 +203,11 @@
 	background-size: 77px;
 	background-repeat: no-repeat;
 }
+
+.champion-thumbnail.disabled {
+	filter: grayscale(1);
+}
+
 .champion-grid .champion-name {
 	color: #a09b8c;
 	font-weight: bold;

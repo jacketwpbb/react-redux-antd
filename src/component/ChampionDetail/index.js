@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchChampionMatchList } from "../../actions/index.js";
 
-import { Collapse, Icon, Spin, Row, Col } from "antd";
+import { Collapse, Icon, Row, Col } from "antd";
 
 import Search from "../CInput/index.js";
 

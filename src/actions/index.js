@@ -3,6 +3,7 @@ import axios from "axios";
 export const FETCH_PLAYERS = "fetch_players";
 export const FETCH_PLAYER_MATCH_LIST = "fetch_player_list";
 export const FETCH_CHAMPION_MATCH_LIST = "fetch_champion_list";
+export const FETCH_ACTIVE_CHAMPION = "fetch_active_champion";
 
 export const PENDING = "_PENDING";
 export const FULFILLED = "_FULFILLED";
@@ -11,16 +12,30 @@ export const REJECTED = "_REJECTED";
 const ROOT_URL = "/lolapi/api";
 
 export function fetchPlayers() {
-	const request = axios.get(`${ROOT_URL}/getLPLMemberInfo.ashx`);
+	const request = axios.get(
+		`${ROOT_URL}/getLPLMemberInfo.ashx?&t=${Date.now()}`
+	);
 	return {
 		type: FETCH_PLAYERS,
 		payload: request
 	};
 }
 
+export function fetchActiveChampion() {
+	const request = axios.get(
+		`${ROOT_URL}/getLPLChampionList.ashx?&t=${Date.now()}`
+	);
+	return {
+		type: FETCH_ACTIVE_CHAMPION,
+		payload: request
+	};
+}
+
 export function fetchPlayerMatchList(id) {
 	const request = axios.get(
-		`${ROOT_URL}/getLPLMatchResult.ashx?type=member&id=${id}`
+		`${ROOT_URL}/getLPLMatchResult.ashx?type=member&id=${
+			id
+		}&t=${Date.now()}`
 	);
 	return {
 		type: FETCH_PLAYER_MATCH_LIST,
@@ -30,7 +45,9 @@ export function fetchPlayerMatchList(id) {
 
 export function fetchChampionMatchList(id) {
 	const request = axios.get(
-		`${ROOT_URL}/getLPLMatchResult.ashx?type=champion&id=${id}`
+		`${ROOT_URL}/getLPLMatchResult.ashx?type=champion&id=${
+			id
+		}&t=${Date.now()}`
 	);
 	return {
 		type: FETCH_CHAMPION_MATCH_LIST,

@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchPlayerMatchList } from "../../actions/index.js";
 
-import { Collapse, Icon, Spin, Row, Col } from "antd";
+import { Collapse, Icon, Row, Col } from "antd";
 
 import Search from "../CInput/index.js";
 
@@ -180,18 +180,27 @@ class PlayerDetail extends Component {
 					<div
 						className="player"
 						style={{
-							backgroundImage: `url(${UserPhoto550})`
+							backgroundImage: `url(${
+								this.props.isFetching ? "" : UserPhoto550
+							})`
 						}}
 					>
 						<div className="playerInfo">
-							<p className="enName">{NickName}</p>
-							<p className="RealName">{RealName}</p>
+							<p className="enName">
+								{this.props.isFetching ? "" : NickName}
+							</p>
+							<p className="RealName">
+								{this.props.isFetching ? "" : RealName}
+							</p>
 							<p className="player-position-icon-box">
 								<svg className="player-position-icon">
 									<use
 										xlinkHref={`#icon-position-${
-											positionObj[parseInt(GamePlace, 10)]
-												.ENName
+											this.props.isFetching
+												? ""
+												: positionObj[
+														parseInt(GamePlace, 10)
+													].ENName
 										}`}
 									/>
 								</svg>
@@ -310,7 +319,6 @@ class PlayerDetail extends Component {
 	}
 
 	render() {
-		const antIcon = <Icon type="loading" style={{ fontSize: 50 }} spin />;
 		return (
 			<div className="PlayerDetail">
 				<div className="header">{this.renderHeader()}</div>

@@ -15,7 +15,8 @@
 		"Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica,
 		Arial, sans-serif;
 
-	background: #101010;
+	background: #000c17;
+	min-height: 100vh;
 }
 p {
 	padding: 0;
@@ -209,6 +210,7 @@ p {
 .PlayerDetail .no-stats {
 	color: #fff;
 	margin: 0 auto;
+	text-align: center;
 }
 
 @media screen and (max-width: 768px) {
