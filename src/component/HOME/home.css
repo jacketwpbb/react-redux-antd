@@ -1,0 +1,282 @@
+.ant-col-xs-245,
+.ant-col-sm-245,
+.ant-col-md-245,
+.ant-col-lg-245 {
+    position: relative;
+}
+
+.ant-col-xs-245 {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .ant-col-sm-245 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .ant-col-md-245 {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .ant-col-lg-245 {
+        width: 20%;
+        float: left;
+    }
+}
+
+.home {
+    color: #fff;
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+.best-player,
+.most-used-rune {
+    margin-top: 50px;
+}
+.section-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 1em;
+}
+
+.section-title .section-title--accent {
+    flex: 1;
+    height: 1px;
+    background: #5d471d;
+    position: relative;
+}
+.section-title .section-title--accent.accent-left {
+    background: linear-gradient(to right, transparent 0%, #5d471d 50%);
+}
+
+.section-title .section-title--accent.accent-right {
+    background: linear-gradient(to left, transparent 0%, #5d471d 50%);
+}
+
+.section-title .section-title--accent:after {
+    content: "";
+    position: absolute;
+    height: 7px;
+    width: 7px;
+    border: 1px solid #5d471d;
+}
+
+.section-title .section-title--accent.accent-left:after {
+    transform: rotate(-45deg) translateY(-4px);
+    right: -10px;
+}
+
+.section-title .section-title--accent.accent-right:after {
+    transform: rotate(45deg) translateY(-4px);
+    left: -10px;
+}
+
+.section-title .section-title--text {
+    margin: 0 1.5em;
+    font-weight: bold;
+    color: #f2e9da;
+}
+
+.home-list-item {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+}
+.home-list-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    background: #000a13;
+}
+.home-list-item-box {
+    width: 190px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 30px 0 10px;
+}
+.home-champion-list-item-box {
+    padding: 10px 0 30px;
+    justify-content: flex-end;
+}
+.home-player-list-item-box {
+    padding: 30px 0 10px;
+    justify-content: flex-start;
+}
+.home-position-icon {
+    width: 50px;
+    height: 50px;
+}
+.home-champion-winrate {
+    font-weight: bold;
+    font-size: 30px;
+}
+.home-champion-name,
+.home-player-name {
+    font-weight: bold;
+    font-size: 20px;
+    color: #f1e6d3;
+}
+
+.home-list-item-box:after {
+    border: 1px solid #5d471d;
+    opacity: 0;
+    z-index: 2;
+    transition: 0.2s ease;
+}
+
+.home-list-item-box:before,
+.home-list-item-box:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+.home-list-item-box:before {
+    border: 5px solid rgba(1, 18, 28, 0.8);
+    box-shadow: inset 0 0 0 4px rgba(253, 249, 249, 0.05);
+    z-index: 2;
+}
+
+.home-list-item-box:hover:after {
+    opacity: 1;
+}
+.home-list-item-box .rune-path-bg,
+.home-list-item-box .home-player-bg,
+.home-list-item-box .home-champion-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-color: #010913;
+    opacity: 0.2;
+    background-size: auto 120%;
+    background-position: left 10% center;
+
+    background-repeat: no-repeat;
+    transition: 0.2s ease;
+}
+.home-list-item-box .home-player-image-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background-size: 80% auto;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+}
+
+.home-list-item-box .home-champion-bg {
+    opacity: 0.6;
+    background-size: cover;
+    background-position: top center;
+}
+.home-rune-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.home-position-name {
+    display: flex;
+    align-items: center;
+}
+.home-position-name .home-position-icon {
+    width: 30px;
+    height: 30px;
+}
+.home-list-item-rune-image-box {
+    width: 70px;
+    height: 70px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+.home-list-item-rune-image {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.5);
+}
+
+.home-list-item:hover .home-list-item-rune-image-box.DOMINATION {
+    border: 3px solid #c63e40;
+}
+.home-list-item:hover .home-list-item-rune-image-box.PRECISION {
+    border: 3px solid #d0bf67;
+}
+.home-list-item:hover .home-list-item-rune-image-box.SORCERY {
+    border: 3px solid #9faafc;
+}
+.home-list-item:hover .home-list-item-rune-image-box.RESOLVE {
+    border: 3px solid #a1d586;
+}
+.home-list-item:hover .home-list-item-rune-image-box.INSPIRATION {
+    border: 3px solid #49aab9;
+}
+
+.home-list-item:hover .home-list-item-box .rune-path-bg,
+.home-list-item-box:hover .home-player-bg {
+    transform: scale(0.96);
+    opacity: 0.6;
+}
+
+.home-list-item-box:hover .home-champion-bg {
+    transform: scale(0.96);
+    opacity: 1;
+}
+.home-rune-champions {
+    display: flex;
+    justify-content: space-around;
+    width: 170px;
+    margin: 0 auto;
+}
+.home-rune-champions img {
+    width: 50px;
+    height: 50px;
+}
+.home-rune-champions img:hover {
+    filter: brightness(1.2);
+}
+.home-rune-des {
+    color: #f1e6d3;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+@media screen and (max-width: 991px) {
+}
+
+@media screen and (max-width: 400px) {
+    .home-list-item {
+        width: 100%;
+    }
+    .home-list-item-box {
+        width: 80%;
+    }
+}

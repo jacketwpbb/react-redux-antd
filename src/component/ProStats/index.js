@@ -1,6 +1,6 @@
 import React from "react";
 import "./ProStats.css";
-
+import { Link } from "react-router-dom";
 import { Row, Col } from "antd";
 
 const ProStats = ({ matchList }) => {
@@ -13,7 +13,7 @@ const ProStats = ({ matchList }) => {
 
 			heroSatus[MemberId].memberId = MemberId;
 			heroSatus[MemberId].count = 1;
-			heroSatus[MemberId].gameName = BattlePlayer.memberInfo.GameName;
+			heroSatus[MemberId].gameName = BattlePlayer.memberInfo.NickName;
 			heroSatus[MemberId].url = BattlePlayer.memberInfo.UserIcon;
 			heroSatus[MemberId].win = Game_W ? 1 : 0;
 		} else {
@@ -67,10 +67,12 @@ const ProStats = ({ matchList }) => {
 								}) => (
 									<li className="championItem" key={memberId}>
 										<div className="champion-icon">
-											<img src={url} alt={memberId} />
-											<div className="player-game-name">
-												{gameName}
-											</div>
+											<Link to={`/players/${memberId}`}>
+												<img src={url} alt={gameName} />
+												<div className="player-game-name">
+													{gameName}
+												</div>
+											</Link>
 										</div>
 										<div className="champion-des">
 											{`${count}场${(
@@ -89,6 +91,11 @@ const ProStats = ({ matchList }) => {
 					<ul className="championBox">
 						{winrateArr
 							.reverse()
+							.sort((pre, next) => {
+								return pre.winRate === next.winRate
+									? next.count - pre.count
+									: pre.winRate - next.winRate;
+							})
 							.slice(0, 3)
 							.map(
 								({
@@ -100,10 +107,12 @@ const ProStats = ({ matchList }) => {
 								}) => (
 									<li className="championItem" key={memberId}>
 										<div className="champion-icon">
-											<img src={url} alt={memberId} />
-											<div className="player-game-name">
-												{gameName}
-											</div>
+											<Link to={`/players/${memberId}`}>
+												<img src={url} alt={gameName} />
+												<div className="player-game-name">
+													{gameName}
+												</div>
+											</Link>
 										</div>
 										<div className="champion-des">
 											{`${count}场${(
@@ -131,10 +140,12 @@ const ProStats = ({ matchList }) => {
 								}) => (
 									<li className="championItem" key={memberId}>
 										<div className="champion-icon">
-											<img src={url} alt={memberId} />
-											<div className="player-game-name">
-												{gameName}
-											</div>
+											<Link to={`/players/${memberId}`}>
+												<img src={url} alt={gameName} />
+												<div className="player-game-name">
+													{gameName}
+												</div>
+											</Link>
 										</div>
 										<div className="champion-des">
 											{`${count}/${matchList.length}场`}

@@ -2,6 +2,9 @@
 	display: flex;
 	margin: 0;
 }
+.runeList .items-box {
+	flex-wrap: wrap;
+}
 .rune-image {
 	position: relative;
 	width: 64px;
@@ -30,16 +33,14 @@
 	background: #2d2d2d;
 	z-index: 0;
 }
-.rune-item {
-}
+
 .rune-image img {
 	position: relative;
 	border: 2px solid #d0bf67;
 	border-radius: 50%;
 	width: 100%;
 	height: 100%;
-	display: flex;
-	flex-direction: columns;
+	display: block;
 }
 
 .rune-image span {
@@ -76,4 +77,3 @@
 }
 
 /*DOMINATION PRECISION SORCERY RESOLVE INSPIRATION*/
-

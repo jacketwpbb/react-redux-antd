@@ -20,12 +20,13 @@
 .proStats .champion-des {
 }
 
-.proStats .champion-icon {
+.proStats .champion-icon > a {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	width: 80px;
+	color: #fff;
 }
 
 .proStats .champion-icon img {
@@ -38,7 +39,7 @@
 	height: 60px;
 }
 
-.proStats .championItem:first-child .champion-des .player-game-name {
+.proStats .championItem:first-child .player-game-name {
 	font-size: 18px;
 }
 
@@ -46,4 +47,3 @@
 	text-align: center;
 	margin: 50px auto;
 }
-

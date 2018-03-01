@@ -3,6 +3,7 @@ import "./ChampionStats.css";
 
 import { Row, Col } from "antd";
 
+import { Link } from "react-router-dom";
 import { mapKey } from "../../util/index.js";
 
 import championJson from "../../lolJSON/champion.json";
@@ -65,12 +66,18 @@ const ChampionStats = ({ matchList }) => {
 							.map(({ championId, winRate, count }) => (
 								<li className="championItem" key={championId}>
 									<div className="champion-icon">
-										<img
-											src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+										<Link
+											to={`/champions/${
 												keys[championId]
-											}.png`}
-											alt="championId"
-										/>
+											}`}
+										>
+											<img
+												src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+													keys[championId]
+												}.png`}
+												alt="championId"
+											/>
+										</Link>
 									</div>
 									<div className="champion-des">
 										{`${count}场${(winRate * 100).toFixed(
@@ -88,16 +95,27 @@ const ChampionStats = ({ matchList }) => {
 					<ul className="championBox">
 						{winrateArr
 							.reverse()
+							.sort((pre, next) => {
+								return pre.winRate === next.winRate
+									? next.count - pre.count
+									: pre.winRate - next.winRate;
+							})
 							.slice(0, 3)
 							.map(({ championId, winRate, count }) => (
 								<li className="championItem" key={championId}>
 									<div className="champion-icon">
-										<img
-											src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+										<Link
+											to={`/champions/${
 												keys[championId]
-											}.png`}
-											alt="championId"
-										/>
+											}`}
+										>
+											<img
+												src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+													keys[championId]
+												}.png`}
+												alt="championId"
+											/>
+										</Link>
 									</div>
 									<div className="champion-des">
 										{`${count}场${(winRate * 100).toFixed(
@@ -117,12 +135,18 @@ const ChampionStats = ({ matchList }) => {
 							.map(({ championId, winRate, count }) => (
 								<li className="championItem" key={championId}>
 									<div className="champion-icon">
-										<img
-											src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+										<Link
+											to={`/champions/${
 												keys[championId]
-											}.png`}
-											alt="championId"
-										/>
+											}`}
+										>
+											<img
+												src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+													keys[championId]
+												}.png`}
+												alt="championId"
+											/>
+										</Link>
 									</div>
 									<div className="champion-des">
 										{`${count}/${matchList.length}场`}

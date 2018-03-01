@@ -131,6 +131,8 @@ class ChampionList extends Component {
 		}
 
 		const activeChampions = this.props.activeChampions;
+		const activeChampionPending = this.props.activeChampionPending;
+		console.log("activeChampionPending", activeChampionPending);
 
 		return filteredList.map(championId => (
 			<Col
@@ -140,15 +142,22 @@ class ChampionList extends Component {
 				sm={4}
 				md={4}
 				lg={3}
-				order={activeChampions.indexOf(+championId) === -1 ? 10 : 0}
+				order={
+					!activeChampionPending &&
+					activeChampions.indexOf(+championId) === -1
+						? 10
+						: 0
+				}
 			>
 				<Link
 					to={
+						!activeChampionPending &&
 						activeChampions.indexOf(+championId) === -1
 							? "/champions"
 							: `/champions/${championMap[championId]}`
 					}
 					onClick={
+						!activeChampionPending &&
 						activeChampions.indexOf(+championId) === -1
 							? this.showchampionMessage
 							: () => ""
@@ -157,6 +166,7 @@ class ChampionList extends Component {
 					<div className="champion-thumbnail-frame">
 						<div
 							className={`champion-thumbnail ${
+								!activeChampionPending &&
 								activeChampions.indexOf(+championId) === -1
 									? "disabled"
 									: ""
@@ -342,9 +352,10 @@ class ChampionList extends Component {
 	}
 }
 
-function mapStateToProps({ activeChampions }) {
+function mapStateToProps({ activeChampions, isFetching }) {
 	return {
-		activeChampions
+		activeChampions,
+		activeChampionPending: isFetching.activeChampionPending
 	};
 }
 
