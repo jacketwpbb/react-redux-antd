@@ -37,7 +37,9 @@ class ChampionList extends Component {
 		};
 	}
 	componentWillMount() {
-		this.props.fetchActiveChampion();
+		if (this.props.activeChampions.length === 0) {
+			this.props.fetchActiveChampion();
+		}
 	}
 	showchampionMessage() {
 		message.warning("暂时没有选手使用这个英雄哦");
