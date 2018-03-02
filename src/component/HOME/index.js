@@ -39,23 +39,28 @@ class Home extends Component {
 		const runeArr = [
 			{
 				champions: [103, 12, 136],
-				runeId: 8437
+				runeId: 8437,
+				count: 12
 			},
 			{
 				champions: [268, 432, 53],
-				runeId: 8112
+				runeId: 8112,
+				count: 11
 			},
 			{
 				champions: [103, 12, 136],
-				runeId: 8005
+				runeId: 8005,
+				count: 10
 			},
 			{
 				champions: [103, 12, 136],
-				runeId: 8229
+				runeId: 8229,
+				count: 1
 			},
 			{
 				champions: [103, 12, 136],
-				runeId: 8326
+				runeId: 8326,
+				count: 11
 			}
 		];
 
@@ -110,9 +115,9 @@ class Home extends Component {
 									>
 										<a href="javascript:;">
 											<img
-												src={`http://lolstatic.tuwan.com/cdn/8.3.1/img/champion/${
-													champion
-												}.png`}
+												src={`http://lolstatic.tuwan.com/cdn/${
+													patchVersion
+												}/img/champion/${champion}.png`}
 												alt={champion}
 											/>
 										</a>
@@ -126,7 +131,6 @@ class Home extends Component {
 		);
 	}
 	renderChampionList() {
-		const positionMap = {};
 		const championArr = [
 			{
 				championId: 14,

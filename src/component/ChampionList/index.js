@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Row, Col, message } from "antd";
+import { Row, Col, message, Icon } from "antd";
 
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
@@ -132,8 +132,15 @@ class ChampionList extends Component {
 
 		const activeChampions = this.props.activeChampions;
 		const activeChampionPending = this.props.activeChampionPending;
-		console.log("activeChampionPending", activeChampionPending);
 
+		if (activeChampionPending) {
+			return (
+				<div className="loading">
+					<Icon type="loading" style={{ fontSize: 50 }} spin />
+					<div>loading...</div>
+				</div>
+			);
+		}
 		return filteredList.map(championId => (
 			<Col
 				className="championLinkItem"
@@ -142,22 +149,15 @@ class ChampionList extends Component {
 				sm={4}
 				md={4}
 				lg={3}
-				order={
-					!activeChampionPending &&
-					activeChampions.indexOf(+championId) === -1
-						? 10
-						: 0
-				}
+				order={activeChampions.indexOf(+championId) === -1 ? 10 : 0}
 			>
 				<Link
 					to={
-						!activeChampionPending &&
 						activeChampions.indexOf(+championId) === -1
 							? "/champions"
 							: `/champions/${championMap[championId]}`
 					}
 					onClick={
-						!activeChampionPending &&
 						activeChampions.indexOf(+championId) === -1
 							? this.showchampionMessage
 							: () => ""
@@ -166,7 +166,6 @@ class ChampionList extends Component {
 					<div className="champion-thumbnail-frame">
 						<div
 							className={`champion-thumbnail ${
-								!activeChampionPending &&
 								activeChampions.indexOf(+championId) === -1
 									? "disabled"
 									: ""

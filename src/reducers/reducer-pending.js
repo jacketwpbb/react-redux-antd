@@ -29,7 +29,7 @@ export default function(state = {}, action) {
 			return { ...state, championMatchListPending: false };
 
 		case FETCH_PLAYERS + PENDING:
-			return { ...state, matchListPending: true };
+			return { ...state, playersPending: true };
 		case FETCH_PLAYERS + FULFILLED:
 		case FETCH_PLAYERS + REJECTED:
 			return { ...state, playersPending: false };

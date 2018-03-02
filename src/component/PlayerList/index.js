@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Row, Col } from "antd";
+import { Row, Col, Icon } from "antd";
 
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
@@ -101,6 +101,14 @@ class PlayerList extends Component {
 		});
 
 		if (filteredList.length === 0) {
+			if (this.props.isFetching) {
+				return (
+					<div className="loading">
+						<Icon type="loading" style={{ fontSize: 50 }} spin />
+						<div>loading...</div>
+					</div>
+				);
+			}
 			return (
 				<div
 					style={{
@@ -306,10 +314,10 @@ class PlayerList extends Component {
 	}
 }
 
-function mapStateToProps({ players, playersPending }) {
+function mapStateToProps({ players, isFetching }) {
 	return {
 		players,
-		isFetching: playersPending
+		isFetching: isFetching.playersPending
 	};
 }
 
