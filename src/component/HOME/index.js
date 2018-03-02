@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
-import { Row, Col } from "antd";
+import { Row, Col, Icon } from "antd";
+
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { fetchHomePageStats } from "../../actions/index.js";
 
 import "./Home.css";
 
@@ -35,52 +40,43 @@ runeJson.styles.forEach(({ slots, name }) => {
 });
 
 class Home extends Component {
+	componentWillMount() {
+		console.log(this.props.fetchHomePageStats);
+		this.props.fetchHomePageStats();
+	}
 	renderRuneList() {
-		const runeArr = [
-			{
-				champions: [103, 12, 136],
-				runeId: 8437,
-				count: 12
-			},
-			{
-				champions: [268, 432, 53],
-				runeId: 8112,
-				count: 11
-			},
-			{
-				champions: [103, 12, 136],
-				runeId: 8005,
-				count: 10
-			},
-			{
-				champions: [103, 12, 136],
-				runeId: 8229,
-				count: 1
-			},
-			{
-				champions: [103, 12, 136],
-				runeId: 8326,
-				count: 11
-			}
-		];
+		const runeArr = this.props.homePageStats.BestPerks;
 
-		const runeFinalArr = runeArr.map(({ runeId, champions }) => {
-			const { name, tree } = runeMap[runeId];
-			return {
-				runeName: name,
-				img: `http://lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${
-					runeId
-				}.png`,
-				champions: champions.map(id => championMap[id]),
-				background: `//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${
-					tree
-				}.jpg`,
-				runePath: tree
-			};
+		const runePathCount = {};
+		const runePathArr = runeArr.filter(({ RuneId: runeId }) => {
+			if (runePathCount[runeMap[runeId].treeName]) {
+				return false;
+			} else {
+				runePathCount[runeMap[runeId].treeName] = true;
+				return true;
+			}
 		});
 
+		const runeFinalArr = runePathArr
+			.map(({ RuneId: runeId, Champions: champions, Count }) => {
+				const { name, tree } = runeMap[runeId];
+				return {
+					runeName: name,
+					img: `http://lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${
+						runeId
+					}.png`,
+					champions: champions.map(id => championMap[id]),
+					background: `//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${
+						tree
+					}.jpg`,
+					runePath: tree,
+					count: Count
+				};
+			})
+			.sort((pre, next) => next.count - pre.count);
+
 		return runeFinalArr.map(
-			({ runeName, img, champions, background, runePath }) => (
+			({ runeName, img, champions, background, runePath, count }) => (
 				<Col xs={12} md={245} key={runeName} className="home-list-item">
 					<div className="home-list-item-box">
 						<div
@@ -101,6 +97,7 @@ class Home extends Component {
 							</div>
 
 							<span className="home-rune-name">{runeName}</span>
+							<span className="home-rune-count">{count}场</span>
 						</div>
 						<div>
 							<div className="home-rune-des">
@@ -113,14 +110,14 @@ class Home extends Component {
 										className="home-rune-champions"
 										key={champion}
 									>
-										<a href="javascript:;">
+										<Link to={`/champions/${champion}`}>
 											<img
 												src={`http://lolstatic.tuwan.com/cdn/${
 													patchVersion
 												}/img/champion/${champion}.png`}
 												alt={champion}
 											/>
-										</a>
+										</Link>
 									</li>
 								))}
 							</ul>
@@ -131,184 +128,58 @@ class Home extends Component {
 		);
 	}
 	renderChampionList() {
-		const championArr = [
-			{
-				championId: 14,
-				Place: 1,
-				winRate: "80%"
-			},
-			{
-				championId: 15,
-				Place: 2,
-				winRate: "80%"
-			},
-			{
-				championId: 16,
-				Place: 3,
-				winRate: "80%"
-			},
-			{
-				championId: 17,
-				Place: 4,
-				winRate: "80%"
-			},
-			{
-				championId: 18,
-				Place: 5,
-				winRate: "80%"
-			}
-		];
+		const championArr = this.props.homePageStats.BestChampions;
 
-		return championArr.map(({ championId, winRate, Place }) => (
-			<Col xs={12} md={245} key={championId} className="home-list-item">
-				<div className="home-list-item-box home-champion-list-item-box">
-					<div
-						className=" home-champion-bg"
-						style={{
-							backgroundImage: `url(//lolstatic.tuwan.com/cdn/img/champion/loading/${
-								championMap[championId]
-							}_0.jpg)`
-						}}
-					/>
-					<div className="home-rune-box">
-						<svg className="home-position-icon">
-							<use
-								xlinkHref={`#icon-position-${
-									positionArr[Place - 1].ENName
-								}`}
+		return championArr.map(
+			({ ChampionId: championId, WinRate: winRate, Place }) => (
+				<Col
+					xs={12}
+					md={245}
+					key={championId}
+					className="home-list-item"
+				>
+					<Link
+						className="home-link"
+						to={`/champions/${
+							championJson[championMap[championId]].id
+						}`}
+					>
+						<div className="home-list-item-box home-champion-list-item-box">
+							<div
+								className=" home-champion-bg"
+								style={{
+									backgroundImage: `url(//lolstatic.tuwan.com/cdn/img/champion/loading/${
+										championMap[championId]
+									}_0.jpg)`
+								}}
 							/>
-						</svg>
+							<div className="home-rune-box">
+								<svg className="home-position-icon">
+									<use
+										xlinkHref={`#icon-position-${
+											positionArr[Place - 1].ENName
+										}`}
+									/>
+								</svg>
 
-						<span className="home-champion-winrate">{winRate}</span>
-					</div>
-					<div>
-						<div className="home-rune-des">胜率</div>
-						<div className="home-champion-name">
-							{championJson[championMap[championId]].name}
+								<span className="home-champion-winrate">
+									{winRate * 100 + "%"}
+								</span>
+							</div>
+							<div>
+								<div className="home-rune-des">胜率</div>
+								<div className="home-champion-name">
+									{championJson[championMap[championId]].name}
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</Col>
-		));
+					</Link>
+				</Col>
+			)
+		);
 	}
 	renderPlayerList() {
-		const playerWeekly = {
-			TopKDA: {
-				Member: {
-					MemberId: 63,
-					GameName: "IGRookie",
-					Place: 2
-				},
-				BMInfo: {
-					MemberId: 63,
-					EnName: "SONGUIJIN",
-					RealName: "宋义进",
-					NickName: "Rookie",
-					UserIcon:
-						"http://img.crawler.qq.com/lolwebvideo/20180103230241/88d4102b83981cd52d2fa377d2f7780f/0",
-					sUrl: "",
-					GameName: "IGRookie",
-					GamePlace: "2,",
-					GameHero: "112,105,61,245,157,7,245,7,1,",
-					UserStatus: "1",
-					UserPhoto550:
-						"http://img.crawler.qq.com/lolwebvideo/20180103230633/c54b3c1fa007af3b0701385a96f276d5/0"
-				},
-				Value: 12.75
-			},
-			TopKill: {
-				Member: {
-					MemberId: 1534,
-					GameName: "JDGYagao",
-					Place: 2
-				},
-				BMInfo: {
-					MemberId: 1534,
-					EnName: "Yagao",
-					RealName: "曾奇",
-					NickName: "Yagao",
-					UserIcon:
-						"http://img.crawler.qq.com/lolwebvideo/20180104193802/55aca5459ab7f1c28502c4ff613a6473/0",
-					sUrl: "",
-					GameName: "JDGYagao",
-					GamePlace: "2,",
-					GameHero: "",
-					UserStatus: "1",
-					UserPhoto550:
-						"http://img.crawler.qq.com/lolwebvideo/20180104194237/5d6b33f7de25ad3d653b600c5a7756bf/0"
-				},
-				Value: 7.3333
-			},
-			TopDeath: {
-				Member: {
-					MemberId: 1267,
-					GameName: "FPXCrisp",
-					Place: 4
-				},
-				BMInfo: {
-					MemberId: 1267,
-					EnName: "Crisp",
-					RealName: "刘青松",
-					NickName: "Crisp",
-					UserIcon:
-						"http://img.crawler.qq.com/lolwebvideo/20180106091512/2b8cd07f082d53ef2052f60128e2e370/0",
-					sUrl: "",
-					GameName: "FPXCrisp",
-					GamePlace: "4,",
-					GameHero: "",
-					UserStatus: "1",
-					UserPhoto550:
-						"http://img.crawler.qq.com/lolwebvideo/20180106091704/46b5b3bd62d9294bd2c665ef3196c815/0"
-				},
-				Value: 4.6667
-			},
-			TopWards: {
-				Member: {
-					MemberId: 1397,
-					GameName: "FPXPepper",
-					Place: 5
-				},
-				BMInfo: {
-					MemberId: 1397,
-					EnName: "Pepper",
-					RealName: "胡志威",
-					NickName: "Pepper",
-					UserIcon:
-						"http://img.crawler.qq.com/lolwebvideo/20180106091048/bfaca9a9e2eeefb1cc288e5d3a9fa2a2/0",
-					sUrl: "",
-					GameName: "FPXPepper",
-					GamePlace: "5,",
-					GameHero: "",
-					UserStatus: "1",
-					UserPhoto550:
-						"http://img.crawler.qq.com/lolwebvideo/20180106091229/5b7eea2e09d8e0e21fe5def7c8c9e2c8/0"
-				},
-				Value: 2.2524067547893836
-			},
-			TopTeamFight: {
-				Member: {
-					MemberId: 291,
-					GameName: "BLGRoad",
-					Place: 4
-				},
-				BMInfo: {
-					MemberId: 291,
-					EnName: "YOONHANKIL",
-					RealName: "尹韩吉",
-					NickName: "Road",
-					UserIcon:
-						"http://img.crawler.qq.com/lolwebvideo/20180104171422/b7b0303c2ea8b23eec07bb6e2c0bd0e7/0",
-					sUrl: "",
-					GameName: "BLGRoad",
-					GamePlace: "4,",
-					GameHero: "412,89,201,412,89,201,",
-					UserStatus: "1",
-					UserPhoto550:
-						"http://img.crawler.qq.com/lolwebvideo/20180104171829/c701d1fdeda309931cff6eedabb0e7db/0"
-				},
-				Value: 0.7986111111111112
-			}
-		};
+		const playerWeekly = this.props.homePageStats;
 
 		const playerValueArr = [
 			{
@@ -316,8 +187,8 @@ class Home extends Component {
 				valueName: "最高场均击杀"
 			},
 			{
-				key: "TopDeath",
-				valueName: "最高场均死亡"
+				key: "TopAssist",
+				valueName: "最高场均助攻"
 			},
 			{
 				key: "TopKDA",
@@ -334,7 +205,8 @@ class Home extends Component {
 		];
 
 		const playerWeeklyArr = playerValueArr.map(({ key, valueName }) => {
-			console.log(playerWeekly[key]);
+			console.log(playerWeekly);
+
 			const { BMInfo, Value, Member } = playerWeekly[key];
 
 			const nickNameIndex = BMInfo.GameName.indexOf(BMInfo.NickName);
@@ -349,6 +221,7 @@ class Home extends Component {
 				playerName: BMInfo.NickName,
 				playerImage: BMInfo.UserIcon,
 				Place: Member.Place,
+				playerId: Member.MemberId,
 				valueName,
 				teamName
 			};
@@ -361,7 +234,8 @@ class Home extends Component {
 				playerName,
 				teamName,
 				Place,
-				playerImage
+				playerImage,
+				playerId
 			}) => (
 				<Col
 					xs={12}
@@ -369,48 +243,61 @@ class Home extends Component {
 					key={valueName}
 					className="home-list-item"
 				>
-					<div className="home-list-item-box home-player-list-item-box">
-						<div
-							className=" home-player-bg"
-							style={{
-								backgroundImage: `url(//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${
-									teamName
-								}.png?1)`
-							}}
-						/>
+					<Link className="home-link" to={`/players/${playerId}`}>
+						<div className="home-list-item-box home-player-list-item-box">
+							<div
+								className=" home-player-bg"
+								style={{
+									backgroundImage: `url(//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${
+										teamName
+									}.png?1)`
+								}}
+							/>
 
-						<div
-							className=" home-player-image-bg"
-							style={{
-								backgroundImage: `url(${playerImage})`
-							}}
-						/>
-						<div className="home-rune-box">
-							<div className="home-position-name">
-								<span className="home-player-name">
-									{playerName}
+							<div
+								className=" home-player-image-bg"
+								style={{
+									backgroundImage: `url(${playerImage})`
+								}}
+							/>
+							<div className="home-rune-box">
+								<div className="home-position-name">
+									<span className="home-player-name">
+										{playerName}
+									</span>
+									<svg className="home-position-icon">
+										<use
+											xlinkHref={`#icon-position-${
+												positionArr[Place - 1].ENName
+											}`}
+										/>
+									</svg>
+								</div>
+
+								<span className="home-champion-winrate">
+									{value}
 								</span>
-								<svg className="home-position-icon">
-									<use
-										xlinkHref={`#icon-position-${
-											positionArr[Place - 1].ENName
-										}`}
-									/>
-								</svg>
+
+								<div className="home-rune-des">{valueName}</div>
 							</div>
-
-							<span className="home-champion-winrate">
-								{value}
-							</span>
-
-							<div className="home-rune-des">{valueName}</div>
 						</div>
-					</div>
+					</Link>
 				</Col>
 			)
 		);
 	}
 	render() {
+		console.log("fect", this.props.isFetching);
+		if (Object.keys(this.props.homePageStats).length === 0) {
+			return (
+				<div className="home">
+					<div className="loading">
+						<Icon type="loading" style={{ fontSize: 50 }} spin />
+						<div>loading...</div>
+					</div>
+				</div>
+			);
+		}
 		return (
 			<div className="home">
 				<div className="best-player">
@@ -422,6 +309,9 @@ class Home extends Component {
 						<span className="section-title--accent accent-right" />
 					</h2>
 					<Row type="flex">{this.renderChampionList()}</Row>
+					<div className="home-stats-des">
+						数据说明：仅统计一周内出场数大于3的英雄
+					</div>
 				</div>
 				<div className="best-player">
 					<h2 className="section-title">
@@ -440,10 +330,20 @@ class Home extends Component {
 						<span className="section-title--accent accent-right" />
 					</h2>
 					<Row type="flex">{this.renderRuneList()}</Row>
+					<div className="home-stats-des">
+						数据说明：仅统计一周内每个系出场数最多的基石符文
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default Home;
+function mapStateToProps({ homePageStats, isFetching }) {
+	return {
+		homePageStats,
+		isFetching: isFetching.homePagePending
+	};
+}
+
+export default connect(mapStateToProps, { fetchHomePageStats })(Home);

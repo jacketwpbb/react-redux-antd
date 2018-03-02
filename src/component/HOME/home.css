@@ -40,7 +40,9 @@
 .best-player,
 .most-used-rune {
     margin-top: 50px;
+    margin-bottom: 50px;
 }
+
 .section-title {
     display: flex;
     flex-direction: row;
@@ -128,6 +130,7 @@
 .home-champion-winrate {
     font-weight: bold;
     font-size: 30px;
+    color: #fff;
 }
 .home-champion-name,
 .home-player-name {
@@ -267,6 +270,18 @@
     font-size: 12px;
     font-weight: bold;
     margin-bottom: 5px;
+}
+
+.home-link {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.home-stats-des {
+    text-align: center;
+    color: #7d7d7d;
+
+    padding: 10px 0;
 }
 
 @media screen and (max-width: 991px) {

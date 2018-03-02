@@ -305,7 +305,6 @@ class PlayerDetail extends Component {
 		return (
 			<div className="championDetail">
 				<div className="header">{this.renderHeader()}</div>
-
 				{this.props.isFetching ? (
 					<div className="loading">
 						<Icon type="loading" style={{ fontSize: 50 }} spin />
@@ -321,6 +320,7 @@ class PlayerDetail extends Component {
 								placeholder="输入选手的姓名/ID/战队"
 								onChange={this.handleChange.bind(this)}
 								className="filterInput"
+								enterButton
 							/>
 						</div>
 

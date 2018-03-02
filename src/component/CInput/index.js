@@ -40,6 +40,11 @@ const Cinput = (props: Object) => {
     }
   };
 
+  //修复移动端输入法问题
+  const handleSearchBtnClicked = (e: KeyboardEvent) => {
+    const o = { target: { value: e } };
+    props.onChange(o);
+  };
   return (
     <Search
       {...props}
@@ -47,6 +52,7 @@ const Cinput = (props: Object) => {
       onCompositionUpdate={handleComposition}
       onCompositionEnd={handleComposition}
       onChange={handleChange}
+      onSearch={handleSearchBtnClicked}
     />
   );
 };

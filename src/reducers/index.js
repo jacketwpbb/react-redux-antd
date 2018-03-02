@@ -5,13 +5,15 @@ import MatchListReducer from "../reducers/reducer-player-match-list.js";
 import PendingReducer from "./reducer-pending.js";
 import championMatchListReducer from "./reducer-champion-match-list.js";
 import activeChampionReducer from "./reducer-active-champion.js";
+import homePageStatsReducer from "./reducer-home-page-stats.js";
 
 const rootReducer = combineReducers({
 	players: PlayersReducer,
 	matchList: MatchListReducer,
 	isFetching: PendingReducer,
 	championMatchList: championMatchListReducer,
-	activeChampions: activeChampionReducer
+	activeChampions: activeChampionReducer,
+	homePageStats: homePageStatsReducer
 });
 
 export default rootReducer;

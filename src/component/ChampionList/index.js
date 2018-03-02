@@ -213,11 +213,7 @@ class ChampionList extends Component {
 										this
 									)}
 								>
-									<svg
-										className="filter-button--icon"
-										height="30"
-										width="30"
-									>
+									<svg className="filter-button--icon">
 										<use xlinkHref="#icon-position-top" />
 									</svg>
 								</button>
@@ -229,11 +225,7 @@ class ChampionList extends Component {
 										this
 									)}
 								>
-									<svg
-										className="filter-button--icon"
-										height="30"
-										width="30"
-									>
+									<svg className="filter-button--icon">
 										<use xlinkHref="#icon-position-jungle" />
 									</svg>
 								</button>
@@ -245,11 +237,7 @@ class ChampionList extends Component {
 										this
 									)}
 								>
-									<svg
-										className="filter-button--icon"
-										height="30"
-										width="30"
-									>
+									<svg className="filter-button--icon">
 										<use xlinkHref="#icon-position-middle" />
 									</svg>
 								</button>
@@ -261,11 +249,7 @@ class ChampionList extends Component {
 										this
 									)}
 								>
-									<svg
-										className="filter-button--icon"
-										height="30"
-										width="30"
-									>
+									<svg className="filter-button--icon">
 										<use xlinkHref="#icon-position-bottom" />
 									</svg>
 								</button>
@@ -277,11 +261,7 @@ class ChampionList extends Component {
 										this
 									)}
 								>
-									<svg
-										className="filter-button--icon"
-										height="30"
-										width="30"
-									>
+									<svg className="filter-button--icon">
 										<use xlinkHref="#icon-position-support" />
 									</svg>
 								</button>
@@ -306,6 +286,7 @@ class ChampionList extends Component {
 								className="quicksearch"
 								placeholder="输入英雄的中文/英文名称"
 								onChange={this.handleSearchFilter.bind(this)}
+								enterButton
 							/>
 						</Col>
 					</Row>

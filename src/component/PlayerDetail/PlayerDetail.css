@@ -268,4 +268,7 @@ p {
 		-webkit-background-size: contain;
 		background-size: contain;
 	}
+	.PlayerDetail .playerInfo .enName {
+		font-size: 40px;
+	}
 }

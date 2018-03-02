@@ -269,6 +269,7 @@ class PlayerList extends Component {
 								className="quicksearch"
 								placeholder="输入选手ID/姓名/战队简称"
 								onChange={this.handleSearchFilter.bind(this)}
+								enterButton
 							/>
 						</Col>
 					</Row>

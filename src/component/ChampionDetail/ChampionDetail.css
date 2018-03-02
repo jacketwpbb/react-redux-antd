@@ -288,7 +288,7 @@ p {
 		text-shadow: black 2px 2px;
 	}
 	.championDetail .playerInfo .enName {
-		font-size: 60px;
+		font-size: 48px;
 		font-weight: bold;
 	}
 	.championDetail .searchBox {
@@ -310,5 +310,9 @@ p {
 	.championDetail .playerInfo {
 		margin-top: 150px;
 		margin-left: 10px;
+	}
+	.championDetail .playerInfo .enName {
+		font-size: 40px;
+		font-weight: bold;
 	}
 }

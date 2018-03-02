@@ -1,5 +1,6 @@
 import axios from "axios";
 
+export const FETCH_HOMEPAGE_STATS = "fetch_homepage_stats";
 export const FETCH_PLAYERS = "fetch_players";
 export const FETCH_PLAYER_MATCH_LIST = "fetch_player_list";
 export const FETCH_CHAMPION_MATCH_LIST = "fetch_champion_list";
@@ -10,6 +11,19 @@ export const FULFILLED = "_FULFILLED";
 export const REJECTED = "_REJECTED";
 
 const ROOT_URL = "/lolapi/api";
+
+export function fetchHomePageStats(week) {
+	const url = week
+		? `${ROOT_URL}/getLPLWeeklyData.ashx?&t=${Date.now()}`
+		: `${ROOT_URL}/getLPLWeeklyData.ashx?&procid=${100 + week * 10}`;
+
+	const request = axios.get(url);
+	// https://app.tuwan.com/lolapi/api/getLPLWeeklyData.ashx
+	return {
+		type: FETCH_HOMEPAGE_STATS,
+		payload: request
+	};
+}
 
 export function fetchPlayers() {
 	const request = axios.get(

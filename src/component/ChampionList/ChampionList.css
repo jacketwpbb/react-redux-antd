@@ -35,16 +35,17 @@
 	white-space: nowrap;
 	border: none;
 	background: transparent;
-	width: 37px;
 	padding: 0;
 	opacity: 0.3;
 	outline: none;
 	transition: 0.2s ease;
 	cursor: pointer;
 }
-
-.champion-grid--controls .filter-button.active,
-.champion-grid--controls .filter-button:hover {
+.filter-button--icon {
+	width: 32px;
+	height: 32px;
+}
+.champion-grid--controls .filter-button.active {
 	opacity: 1;
 	filter: brightness(1.4);
 }
@@ -54,8 +55,8 @@
 	position: absolute;
 	height: 3px;
 	bottom: -6px;
-	left: 10px;
-	right: 10px;
+	left: 5px;
+	right: 5px;
 	background: #5d471d;
 	display: none;
 }
@@ -351,10 +352,18 @@
 	}
 }
 
+/*修复移动端下 点击后一直处于hover状态的BUG*/
+@media (min-width: 1100px) {
+	.champion-grid--controls .filter-button:hover {
+		opacity: 1;
+		filter: brightness(1.4);
+	}
+}
+
 @media screen and (max-width: 768px) {
 	.championList {
 		width: 100%;
-		margin: 0;
+		margin: 50px 0;
 	}
 	.champion-grid--controls .filter-button-group {
 		justify-content: center;
@@ -365,6 +374,13 @@
 
 	.champion-grid--controls .champion-grid--title {
 		order: -1;
+	}
+	.filter-button--icon {
+		width: 40px;
+		height: 40px;
+	}
+	.champion-grid--controls .filter-button {
+		margin: 0 5px;
 	}
 }
 

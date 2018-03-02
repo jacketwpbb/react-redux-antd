@@ -32,5 +32,16 @@
 .ant-input-search-icon {
 	color: rgb(147, 149, 151);
 }
+.ant-btn-primary {
+	background: transparent;
+	border: 0;
+	color: #af9565;
+}
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+	background: rgba(32, 148, 243, 0.14);
+	border: 0;
+	color: #af9565;
+}
 @media screen and (max-width: 768px) {
 }

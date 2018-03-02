@@ -63,6 +63,8 @@ class App extends Component {
                 component={ChampionDetail}
               />
               <Route path="/champions" component={ChampionList} />
+
+              <Route path="/" exact component={Home} />
             </Switch>
           </div>
         </Router>

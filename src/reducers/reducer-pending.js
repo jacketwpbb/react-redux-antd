@@ -3,6 +3,7 @@ import {
 	FETCH_CHAMPION_MATCH_LIST,
 	FETCH_PLAYERS,
 	FETCH_ACTIVE_CHAMPION,
+	FETCH_HOMEPAGE_STATS,
 	FULFILLED,
 	PENDING,
 	REJECTED
@@ -10,6 +11,12 @@ import {
 
 export default function(state = {}, action) {
 	switch (action.type) {
+		case FETCH_HOMEPAGE_STATS + PENDING:
+			return { ...state, homePagePending: true };
+		case FETCH_HOMEPAGE_STATS + FULFILLED:
+		case FETCH_HOMEPAGE_STATS + REJECTED:
+			return { ...state, homePagePending: false };
+
 		case FETCH_PLAYER_MATCH_LIST + PENDING:
 			return { ...state, matchListPending: true };
 		case FETCH_PLAYER_MATCH_LIST + FULFILLED:

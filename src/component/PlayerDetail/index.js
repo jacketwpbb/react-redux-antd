@@ -337,6 +337,7 @@ class PlayerDetail extends Component {
 								placeholder="输入英雄的中文/英文名称"
 								onChange={this.handleChange.bind(this)}
 								className="filterInput"
+								enterButton
 							/>
 						</div>
 
