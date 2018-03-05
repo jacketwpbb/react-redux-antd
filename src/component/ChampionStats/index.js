@@ -72,7 +72,7 @@ const ChampionStats = ({ matchList }) => {
 											}`}
 										>
 											<img
-												src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+												src={`//ossweb-img.qq.com/images/lol/img/champion/${
 													keys[championId]
 												}.png`}
 												alt="championId"
@@ -110,7 +110,7 @@ const ChampionStats = ({ matchList }) => {
 											}`}
 										>
 											<img
-												src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+												src={`//ossweb-img.qq.com/images/lol/img/champion/${
 													keys[championId]
 												}.png`}
 												alt="championId"
@@ -141,7 +141,7 @@ const ChampionStats = ({ matchList }) => {
 											}`}
 										>
 											<img
-												src={`http://ossweb-img.qq.com/images/lol/img/champion/${
+												src={`//ossweb-img.qq.com/images/lol/img/champion/${
 													keys[championId]
 												}.png`}
 												alt="championId"

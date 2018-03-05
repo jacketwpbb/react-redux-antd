@@ -57,9 +57,7 @@ const Rune = ({ runeList }) => {
 					}`}
 				>
 					<img
-						src={`http://lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${
-							runes_id_
-						}.png`}
+						src={`//lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${runes_id_}.png`}
 						alt={runes_id_}
 					/>
 					<span>{runeMap[runes_id_].name}</span>
@@ -78,7 +76,7 @@ const Rune = ({ runeList }) => {
 			key="aa"
 		>
 			<img
-				src={`http://lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
+				src={`//lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
 					runeMap[runeList[0].runes_id_].tree
 				).toLowerCase()}/icon-${getTreeClassName(
 					runeMap[runeList[0].runes_id_].tree
@@ -99,7 +97,7 @@ const Rune = ({ runeList }) => {
 			key="bb"
 		>
 			<img
-				src={`http://lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
+				src={`//lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
 					runeMap[runeList[4].runes_id_].tree
 				).toLowerCase()}/icon-${getTreeClassName(
 					runeMap[runeList[4].runes_id_].tree

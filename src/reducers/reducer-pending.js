@@ -4,6 +4,7 @@ import {
 	FETCH_PLAYERS,
 	FETCH_ACTIVE_CHAMPION,
 	FETCH_HOMEPAGE_STATS,
+	FETCH_LOLJSON,
 	FULFILLED,
 	PENDING,
 	REJECTED
@@ -11,6 +12,12 @@ import {
 
 export default function(state = {}, action) {
 	switch (action.type) {
+		case FETCH_LOLJSON + PENDING:
+			return { ...state, lolJsonPending: true };
+		case FETCH_LOLJSON + FULFILLED:
+		case FETCH_LOLJSON + REJECTED:
+			return { ...state, lolJsonPending: false };
+
 		case FETCH_HOMEPAGE_STATS + PENDING:
 			return { ...state, homePagePending: true };
 		case FETCH_HOMEPAGE_STATS + FULFILLED:

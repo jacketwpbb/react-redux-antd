@@ -5,8 +5,6 @@ import { Row, Col, Icon } from "antd";
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
 
-import lolBackground from "../../assets/map-bg--full-sm.jpg";
-
 import { connect } from "react-redux";
 
 import { fetchPlayers } from "../../actions/index.js";
@@ -86,7 +84,7 @@ class PlayerList extends Component {
 								.indexOf(searchFilterValue.toLowerCase()) !== -1
 						);
 					}
-				)
+			  )
 			: [];
 
 		//按位置过滤
@@ -303,11 +301,11 @@ class PlayerList extends Component {
 							</div>
 						</div>
 					</div>
-					<div
-						className="champion-grid--bg"
-						data-video="https://runeforge.gg/wp-content/themes/rune_forge/imgs/orb-vid.mkv"
-					>
-						<img src={lolBackground} alt="" />
+					<div className="champion-grid--bg">
+						<img
+							src="//static.tuwan.com/templet/lol/hd/rune_of_pro/images/map-bg--full-sm.jpg"
+							alt="bg"
+						/>
 					</div>
 				</div>
 			</div>

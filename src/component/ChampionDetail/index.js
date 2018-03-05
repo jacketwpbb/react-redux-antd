@@ -15,14 +15,7 @@ import ProStats from "../ProStats/index.js";
 
 import { mapKey } from "../../util/index.js";
 
-import championJson from "../../lolJSON/champion.json";
-import summonerJson from "../../lolJSON/summoner.json";
-import itemJson from "../../lolJSON/item.json";
-
 import LOLPopover from "../LOLPopover/index.js";
-
-const championMap = mapKey(championJson.data, "key");
-const summonerMap = mapKey(summonerJson.data, "key");
 
 const Panel = Collapse.Panel;
 
@@ -35,9 +28,17 @@ class PlayerDetail extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchChampionMatchList(
-			championJson.data[this.props.match.params.ChampionName].key
-		);
+		let timer;
+		timer = setInterval(() => {
+			if (this.props.lolJSON.champion) {
+				this.props.fetchChampionMatchList(
+					this.props.lolJSON.champion.data[
+						this.props.match.params.ChampionName
+					].key
+				);
+				clearInterval(timer);
+			}
+		}, 300);
 	}
 	renderTabContent({ equip, heroInfo }) {
 		const items = [];
@@ -45,6 +46,7 @@ class PlayerDetail extends Component {
 			items.push(equip[key]);
 		}
 
+		const itemJson = this.props.lolJSON.item;
 		const lis = items.map((itemId, idx) => (
 			<li className="item-img" key={idx}>
 				{itemId ? (
@@ -69,10 +71,8 @@ class PlayerDetail extends Component {
 								itemJson.data[itemId]
 									? `//lolstatic.tuwan.com/cdn/${
 											itemJson.version
-										}/img/item/${itemId}.png`
-									: `//ossweb-img.qq.com/images/lol/img/item/${
-											itemId
-										}.png`
+									  }/img/item/${itemId}.png`
+									: `//ossweb-img.qq.com/images/lol/img/item/${itemId}.png`
 							}
 							alt={
 								itemJson.data[itemId]
@@ -83,7 +83,7 @@ class PlayerDetail extends Component {
 					</LOLPopover>
 				) : (
 					<img
-						src="https://static.tuwan.com/templet/lol/hd/hfzhcx/image/itemplaceholder.jpg"
+						src="//static.tuwan.com/templet/lol/hd/hfzhcx/image/itemplaceholder.jpg"
 						alt="空"
 					/>
 				)}
@@ -92,7 +92,8 @@ class PlayerDetail extends Component {
 
 		// heroInfo.runes_info_.runes_list_
 
-		const summonerdata = summonerJson.data;
+		const summonerdata = this.props.lolJSON.summoner.data;
+		const summonerMap = mapKey(this.props.lolJSON.summoner.data, "key");
 
 		const spell1 = summonerMap[heroInfo.spells_info_.spells_list_[0]];
 		const spell2 = summonerMap[heroInfo.spells_info_.spells_list_[1]];
@@ -117,9 +118,7 @@ class PlayerDetail extends Component {
 									content={spell1Content}
 								>
 									<img
-										src={`http://ossweb-img.qq.com/images/lol/img/spell/${
-											spell1
-										}.png`}
+										src={`//ossweb-img.qq.com/images/lol/img/spell/${spell1}.png`}
 										alt=""
 									/>
 								</LOLPopover>
@@ -130,9 +129,7 @@ class PlayerDetail extends Component {
 									content={spell2Content}
 								>
 									<img
-										src={`http://ossweb-img.qq.com/images/lol/img/spell/${
-											spell2
-										}.png`}
+										src={`//ossweb-img.qq.com/images/lol/img/spell/${spell2}.png`}
 										alt=""
 									/>
 								</LOLPopover>
@@ -164,10 +161,25 @@ class PlayerDetail extends Component {
 		);
 	}
 	renderHeader() {
-		const ChampionId =
-			championJson.data[this.props.match.params.ChampionName].key;
+		const championJson = this.props.lolJSON.champion;
 
-		const { id, name, title } = championJson.data[championMap[ChampionId]];
+		if (!championJson) {
+			return (
+				<div className="imagesBox">
+					<div className="champion">
+						<div className="champion-image-bg" />
+						<div className="playerInfo">
+							<p className="enName" />
+							<p className="RealName" />
+						</div>
+					</div>
+				</div>
+			);
+		}
+
+		const { id, name, title } = championJson.data[
+			this.props.match.params.ChampionName
+		];
 
 		return (
 			<div className="imagesBox">
@@ -175,9 +187,7 @@ class PlayerDetail extends Component {
 					<div
 						className="champion-image-bg"
 						style={{
-							backgroundImage: `url(//lolstatic.tuwan.com/cdn/img/champion/splash/${
-								id
-							}_0.jpg)`
+							backgroundImage: `url(//lolstatic.tuwan.com/cdn/img/champion/splash/${id}_0.jpg)`
 						}}
 					/>
 					<div className="playerInfo">
@@ -258,7 +268,10 @@ class PlayerDetail extends Component {
 											src={
 												BattlePlayer.memberInfo.UserIcon
 											}
-											alt={championMap[ChampionId]}
+											alt={
+												this.props.match.params
+													.ChampionName
+											}
 										/>
 									</div>
 									<div className="batttlePlayerName">
@@ -281,9 +294,8 @@ class PlayerDetail extends Component {
 
 								<div className="KDA">
 									<span className="tinyText">KDA</span>
-									<span>{`${Game_K}/${Game_D}/${
-										Game_A
-									}`}</span>
+									<span
+									>{`${Game_K}/${Game_D}/${Game_A}`}</span>
 								</div>
 							</div>
 						}
@@ -338,10 +350,12 @@ class PlayerDetail extends Component {
 	}
 }
 
-function mapStateToProps({ championMatchList, isFetching }) {
+function mapStateToProps({ championMatchList, lolJSON, isFetching }) {
 	return {
 		matchList: championMatchList,
-		isFetching: isFetching.championMatchListPending
+		lolJSON,
+		isFetching:
+			isFetching.championMatchListPending || isFetching.lolJsonPending
 	};
 }
 

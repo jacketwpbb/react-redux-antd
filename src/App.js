@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 
+import { connect } from "react-redux";
+import { fetchLOLJson } from "./actions/index.js";
+
 import "./App.css";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -48,6 +51,9 @@ const ChampionDetail = props => (
 );
 
 class App extends Component {
+  componentWillMount() {
+    this.props.fetchLOLJson("8.4.1");
+  }
   render() {
     return (
       <div className="App">
@@ -73,4 +79,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps({ lolJSON }) {
+  return {
+    lolJSON
+  };
+}
+
+export default connect(mapStateToProps, { fetchLOLJson })(App);

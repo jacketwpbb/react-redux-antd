@@ -15,14 +15,7 @@ import ChampionStats from "../ChampionStats/index.js";
 
 import { mapKey, positionArr } from "../../util/index.js";
 
-import championJson from "../../lolJSON/champion.json";
-import summonerJson from "../../lolJSON/summoner.json";
-import itemJson from "../../lolJSON/item.json";
-
 import LOLPopover from "../LOLPopover/index.js";
-
-const championMap = mapKey(championJson.data, "key");
-const summonerMap = mapKey(summonerJson.data, "key");
 
 const positionObj = {};
 positionArr.forEach(position => (positionObj[position.Place] = position));
@@ -41,6 +34,7 @@ class PlayerDetail extends Component {
 		this.props.fetchPlayerMatchList(this.props.match.params.MemberId);
 	}
 	renderTabContent({ equip, heroInfo }) {
+		const itemJson = this.props.lolJSON.item;
 		const items = [];
 		for (let key in equip) {
 			items.push(equip[key]);
@@ -70,10 +64,8 @@ class PlayerDetail extends Component {
 								itemJson.data[itemId]
 									? `//lolstatic.tuwan.com/cdn/${
 											itemJson.version
-										}/img/item/${itemId}.png`
-									: `//ossweb-img.qq.com/images/lol/img/item/${
-											itemId
-										}.png`
+									  }/img/item/${itemId}.png`
+									: `//ossweb-img.qq.com/images/lol/img/item/${itemId}.png`
 							}
 							alt={
 								itemJson.data[itemId]
@@ -84,7 +76,7 @@ class PlayerDetail extends Component {
 					</LOLPopover>
 				) : (
 					<img
-						src="https://static.tuwan.com/templet/lol/hd/hfzhcx/image/itemplaceholder.jpg"
+						src="//static.tuwan.com/templet/lol/hd/hfzhcx/image/itemplaceholder.jpg"
 						alt="空"
 					/>
 				)}
@@ -93,7 +85,9 @@ class PlayerDetail extends Component {
 
 		// heroInfo.runes_info_.runes_list_
 
-		const summonerdata = summonerJson.data;
+		const { data: summonerdata, version } = this.props.lolJSON.summoner;
+
+		const summonerMap = mapKey(this.props.lolJSON.summoner.data, "key");
 
 		const spell1 = summonerMap[heroInfo.spells_info_.spells_list_[0]];
 		const spell2 = summonerMap[heroInfo.spells_info_.spells_list_[1]];
@@ -118,9 +112,7 @@ class PlayerDetail extends Component {
 									content={spell1Content}
 								>
 									<img
-										src={`http://ossweb-img.qq.com/images/lol/img/spell/${
-											spell1
-										}.png`}
+										src={`//lolstatic.tuwan.com/cdn/${version}/img/spell/${spell1}.png`}
 										alt=""
 									/>
 								</LOLPopover>
@@ -131,9 +123,7 @@ class PlayerDetail extends Component {
 									content={spell2Content}
 								>
 									<img
-										src={`http://ossweb-img.qq.com/images/lol/img/spell/${
-											spell2
-										}.png`}
+										src={`//lolstatic.tuwan.com/cdn/${version}/img/spell/${spell2}.png`}
 										alt=""
 									/>
 								</LOLPopover>
@@ -200,7 +190,7 @@ class PlayerDetail extends Component {
 												? ""
 												: positionObj[
 														parseInt(GamePlace, 10)
-													].ENName
+												  ].ENName
 										}`}
 									/>
 								</svg>
@@ -213,6 +203,8 @@ class PlayerDetail extends Component {
 	}
 
 	renderMatchList() {
+		const championJson = this.props.lolJSON.champion;
+		const championMap = mapKey(championJson.data, "key");
 		const searchFilterValue = this.state.searchFilterValue;
 
 		const numMap = {
@@ -275,7 +267,9 @@ class PlayerDetail extends Component {
 								>
 									<div className="championImage">
 										<img
-											src={`//ossweb-img.qq.com/images/lol/img/champion/${
+											src={`//lolstatic.tuwan.com/cdn/${
+												championJson.version
+											}/img/champion/${
 												championMap[ChampionId]
 											}.png`}
 											alt={championMap[ChampionId]}
@@ -298,9 +292,8 @@ class PlayerDetail extends Component {
 
 								<div className="KDA">
 									<span className="tinyText">KDA</span>
-									<span>{`${Game_K}/${Game_D}/${
-										Game_A
-									}`}</span>
+									<span
+									>{`${Game_K}/${Game_D}/${Game_A}`}</span>
 								</div>
 							</div>
 						}
@@ -355,8 +348,12 @@ class PlayerDetail extends Component {
 	}
 }
 
-function mapStateToProps({ matchList, isFetching }) {
-	return { matchList, isFetching: isFetching.matchListPending };
+function mapStateToProps({ matchList, lolJSON, isFetching }) {
+	return {
+		matchList,
+		lolJSON,
+		isFetching: isFetching.matchListPending || isFetching.lolJsonPending
+	};
 }
 
 export default connect(mapStateToProps, { fetchPlayerMatchList })(PlayerDetail);

@@ -1,11 +1,15 @@
 @font-face {
 	font-family: "TradeGothic";
-	src: url("../../assets/fonts/TradeGothic.eot#iefix");
-	src: url("../../assets/fonts/TradeGothic.eot?#iefix") format("eot"),
-		url("../../assets/fonts/TradeGothic.woff2") format("woff2"),
-		url("../../assets/fonts/TradeGothic.woff") format("woff"),
-		url("../../assets/fonts/TradeGothic.ttf") format("truetype"),
-		url("../../assets/fonts/TradeGothic.svg#df0f9c50-3ce3-4b1f-8120-074ca66b83b1")
+	src: url("//static.tuwan.com/templet/lol/hd/rune_of_pro/fonts/TradeGothic.eot#iefix");
+	src: url("//static.tuwan.com/templet/lol/hd/rune_of_pro/fonts/TradeGothic.eot?#iefix")
+			format("eot"),
+		url("//static.tuwan.com/templet/lol/hd/rune_of_pro/fonts/TradeGothic.woff2")
+			format("woff2"),
+		url("//static.tuwan.com/templet/lol/hd/rune_of_pro/fonts/TradeGothic.woff")
+			format("woff"),
+		url("//static.tuwan.com/templet/lol/hd/rune_of_pro/fonts/TradeGothic.ttf")
+			format("truetype"),
+		url("//static.tuwan.com/templet/lol/hd/rune_of_pro/fonts/TradeGothic.svg#df0f9c50-3ce3-4b1f-8120-074ca66b83b1")
 			format("svg");
 }
 
@@ -48,11 +52,11 @@ p {
 	background-position: 10% 100%;
 }
 .PlayerDetail .imagesBox > .left {
-	background-image: url("../../assets/magic-blue-left-L.jpg");
+	background-image: url("//static.tuwan.com/templet/lol/hd/rune_of_pro/images/magic-blue-left-L.jpg");
 	background-position: 0 100%;
 }
 .PlayerDetail .imagesBox > .right {
-	background-image: url("../../assets/magic-blue-right-L.jpg");
+	background-image: url("//static.tuwan.com/templet/lol/hd/rune_of_pro/images/magic-blue-right-L.jpg");
 	background-position: 100% 100%;
 }
 

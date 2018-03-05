@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Row, Col, Icon } from "antd";
+import { Row, Col, Icon, Select } from "antd";
 
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,15 +9,9 @@ import { fetchHomePageStats } from "../../actions/index.js";
 
 import "./Home.css";
 
-import {
-	data as championJson,
-	version as patchVersion
-} from "../../lolJSON/champion.json";
-
 import runeJson from "../../lolJSON/runes.json";
 import { mapKey, positionArr } from "../../util/index.js";
-
-const championMap = mapKey(championJson, "key");
+const Option = Select.Option;
 
 const runeMap = {};
 const runePathMap = {
@@ -40,11 +34,32 @@ runeJson.styles.forEach(({ slots, name }) => {
 });
 
 class Home extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			week: 0
+		};
+	}
+	handleWeekChange(value) {
+		console.log(value);
+		this.props.fetchHomePageStats(value);
+		this.setState({
+			week: value
+		});
+	}
 	componentWillMount() {
-		console.log(this.props.fetchHomePageStats);
 		this.props.fetchHomePageStats();
 	}
 	renderRuneList() {
+		if (!this.props.lolJSON.champion) {
+			return;
+		}
+		const {
+			data: championJson,
+			version: patchVersion
+		} = this.props.lolJSON.champion;
+		const championMap = mapKey(championJson, "key");
+
 		const runeArr = this.props.homePageStats.BestPerks;
 
 		const runePathCount = {};
@@ -62,13 +77,9 @@ class Home extends Component {
 				const { name, tree } = runeMap[runeId];
 				return {
 					runeName: name,
-					img: `http://lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${
-						runeId
-					}.png`,
+					img: `//lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${runeId}.png`,
 					champions: champions.map(id => championMap[id]),
-					background: `//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${
-						tree
-					}.jpg`,
+					background: `//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${tree}.jpg`,
 					runePath: tree,
 					count: Count
 				};
@@ -85,9 +96,7 @@ class Home extends Component {
 						/>
 						<div className="home-rune-box">
 							<div
-								className={`home-list-item-rune-image-box ${
-									runePath
-								}`}
+								className={`home-list-item-rune-image-box ${runePath}`}
 							>
 								<img
 									className="home-list-item-rune-image"
@@ -97,7 +106,7 @@ class Home extends Component {
 							</div>
 
 							<span className="home-rune-name">{runeName}</span>
-							<span className="home-rune-count">{count}场</span>
+							<span className="home-rune-count">{count}次</span>
 						</div>
 						<div>
 							<div className="home-rune-des">
@@ -112,9 +121,7 @@ class Home extends Component {
 									>
 										<Link to={`/champions/${champion}`}>
 											<img
-												src={`http://lolstatic.tuwan.com/cdn/${
-													patchVersion
-												}/img/champion/${champion}.png`}
+												src={`//lolstatic.tuwan.com/cdn/${patchVersion}/img/champion/${champion}.png`}
 												alt={champion}
 											/>
 										</Link>
@@ -129,6 +136,12 @@ class Home extends Component {
 	}
 	renderChampionList() {
 		const championArr = this.props.homePageStats.BestChampions;
+		if (!this.props.lolJSON.champion) {
+			return;
+		}
+		const { data: championJson } = this.props.lolJSON.champion;
+
+		const championMap = mapKey(championJson, "key");
 
 		return championArr.map(
 			({ ChampionId: championId, WinRate: winRate, Place }) => (
@@ -163,7 +176,7 @@ class Home extends Component {
 								</svg>
 
 								<span className="home-champion-winrate">
-									{winRate * 100 + "%"}
+									{(winRate * 100).toFixed(1) + "%"}
 								</span>
 							</div>
 							<div>
@@ -216,8 +229,8 @@ class Home extends Component {
 				//如果是参团率，改成百分比
 				value:
 					key === "TopTeamFight"
-						? Value.toFixed(3) * 100 + "%"
-						: Value.toFixed(2),
+						? (Value * 100).toFixed(1) + "%"
+						: Value.toFixed(1),
 				playerName: BMInfo.NickName,
 				playerImage: BMInfo.UserIcon,
 				Place: Member.Place,
@@ -248,9 +261,7 @@ class Home extends Component {
 							<div
 								className=" home-player-bg"
 								style={{
-									backgroundImage: `url(//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${
-										teamName
-									}.png?1)`
+									backgroundImage: `url(//static.tuwan.com/templet/lol/hd/rune_of_pro/images/${teamName}.png?1)`
 								}}
 							/>
 
@@ -287,8 +298,10 @@ class Home extends Component {
 		);
 	}
 	render() {
-		console.log("fect", this.props.isFetching);
-		if (Object.keys(this.props.homePageStats).length === 0) {
+		if (
+			Object.keys(this.props.homePageStats).length === 0 ||
+			this.props.isFetching
+		) {
 			return (
 				<div className="home">
 					<div className="loading">
@@ -298,13 +311,64 @@ class Home extends Component {
 				</div>
 			);
 		}
+
+		const weekMap = {
+			1: "一",
+			2: "二",
+			3: "三",
+			4: "四",
+			5: "五",
+			6: "六",
+			7: "七",
+			8: "八",
+			9: "九",
+			10: "十",
+			11: "十一",
+			12: "十二",
+			13: "十三",
+			14: "十四",
+			15: "十五"
+		};
+		const lastWeek =
+			this.state.week ||
+			(this.props.homePageStats.currentProcId - 100) / 10 - 1;
+
+		const allWeekCount =
+			(this.props.homePageStats.currentProcId - 100) / 10;
+
+		const options = [];
+
+		for (let i = 0; i < allWeekCount; i++) {
+			options.push(
+				<Option key={i + 1} value={i + 1}>
+					第{weekMap[i + 1]}周{allWeekCount === i + 1
+						? "（进行中）"
+						: ""}
+				</Option>
+			);
+		}
+
+		const select = (
+			<Select
+				placeholder={"选择周数"}
+				defaultValue={
+					this.state.week === 0 ? allWeekCount - 1 : this.state.week
+				}
+				onChange={this.handleWeekChange.bind(this)}
+				className="home-week-select"
+				dropdownClassName="home-week-dropdown"
+			>
+				{options}
+			</Select>
+		);
 		return (
 			<div className="home">
+				<div className="chooseWeek">{select}</div>
 				<div className="best-player">
 					<h2 className="section-title">
 						<span className="section-title--accent accent-left" />
 						<span className="section-title--text">
-							各位置最强英雄
+							第{weekMap[lastWeek]}周各位置最强英雄
 						</span>
 						<span className="section-title--accent accent-right" />
 					</h2>
@@ -316,7 +380,9 @@ class Home extends Component {
 				<div className="best-player">
 					<h2 className="section-title">
 						<span className="section-title--accent accent-left" />
-						<span className="section-title--text">选手数据</span>
+						<span className="section-title--text">
+							第{weekMap[lastWeek]}周选手数据
+						</span>
 						<span className="section-title--accent accent-right" />
 					</h2>
 					<Row type="flex">{this.renderPlayerList()}</Row>
@@ -325,7 +391,7 @@ class Home extends Component {
 					<h2 className="section-title">
 						<span className="section-title--accent accent-left" />
 						<span className="section-title--text">
-							最佳基石符文
+							第{weekMap[lastWeek]}周最佳基石符文
 						</span>
 						<span className="section-title--accent accent-right" />
 					</h2>
@@ -339,10 +405,11 @@ class Home extends Component {
 	}
 }
 
-function mapStateToProps({ homePageStats, isFetching }) {
+function mapStateToProps({ homePageStats, lolJSON, isFetching }) {
 	return {
 		homePageStats,
-		isFetching: isFetching.homePagePending
+		lolJSON,
+		isFetching: isFetching.homePagePending || isFetching.lolJsonPending
 	};
 }
 

@@ -22,6 +22,5 @@
   "devDependencies": {
     "babel-plugin-import": "^1.6.3",
     "react-app-rewired": "^1.4.1"
-  },
-  "proxy": "https://app.tuwan.com"
+  }
 }

@@ -5,11 +5,7 @@ import { Row, Col, message, Icon } from "antd";
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
 
-import lolBackground from "../../assets/map-bg--full-sm.jpg";
-
 import { mapKey } from "../../util/index.js";
-
-import championJson from "../../lolJSON/champion.json";
 
 import positionJson from "../../lolJSON/position.json";
 
@@ -25,15 +21,12 @@ message.config({
 	duration: 2
 });
 
-const championMap = mapKey(championJson.data, "key");
-
 class ChampionList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			filterStr: "",
-			positionFilter: "",
-			championList: Object.keys(championMap)
+			positionFilter: ""
 		};
 	}
 	componentWillMount() {
@@ -90,21 +83,24 @@ class ChampionList extends Component {
 	renderFilteredList() {
 		const searchFilterValue = this.state.filterStr;
 
-		//有输入关键字按关键过滤
-		const filteredKeyWordList = this.state.championList.filter(
-			ChampionId => {
-				const { id, key, name, title } = championJson.data[
-					championMap[ChampionId]
-				];
-
-				const championName = id + key + name + title;
-				return (
-					championName
-						.toLowerCase()
-						.indexOf(searchFilterValue.toLowerCase()) !== -1
-				);
-			}
+		const championJson = this.props.lolJSON.champion;
+		const championMap = mapKey(this.props.lolJSON.champion.data, "key");
+		const championList = Object.keys(
+			mapKey(this.props.lolJSON.champion.data, "key")
 		);
+		//有输入关键字按关键过滤
+		const filteredKeyWordList = championList.filter(ChampionId => {
+			const { id, key, name, title } = championJson.data[
+				championMap[ChampionId]
+			];
+
+			const championName = id + key + name + title;
+			return (
+				championName
+					.toLowerCase()
+					.indexOf(searchFilterValue.toLowerCase()) !== -1
+			);
+		});
 
 		//按位置过滤
 		const filteredList = filteredKeyWordList.filter(ChampionId => {
@@ -322,11 +318,11 @@ class ChampionList extends Component {
 							</div>
 						</div>
 					</div>
-					<div
-						className="champion-grid--bg"
-						data-video="https://runeforge.gg/wp-content/themes/rune_forge/imgs/orb-vid.mkv"
-					>
-						<img src={lolBackground} alt="" />
+					<div className="champion-grid--bg">
+						<img
+							src="//static.tuwan.com/templet/lol/hd/rune_of_pro/images/map-bg--full-sm.jpg"
+							alt="bg"
+						/>
 					</div>
 				</div>
 			</div>
@@ -334,10 +330,12 @@ class ChampionList extends Component {
 	}
 }
 
-function mapStateToProps({ activeChampions, isFetching }) {
+function mapStateToProps({ activeChampions, lolJSON, isFetching }) {
 	return {
 		activeChampions,
-		activeChampionPending: isFetching.activeChampionPending
+		lolJSON,
+		activeChampionPending:
+			isFetching.activeChampionPending || isFetching.lolJsonPending
 	};
 }
 

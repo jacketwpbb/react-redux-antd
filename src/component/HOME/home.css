@@ -39,7 +39,7 @@
 
 .best-player,
 .most-used-rune {
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 50px;
 }
 
@@ -182,6 +182,10 @@
     background-repeat: no-repeat;
     transition: 0.2s ease;
 }
+.home-list-item-box .home-player-bg {
+    background-size: auto 120%;
+    background-position: center 120%;
+}
 .home-list-item-box .home-player-image-bg {
     position: absolute;
     top: 0;
@@ -283,8 +287,55 @@
 
     padding: 10px 0;
 }
+.chooseWeek {
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-end;
+}
+.home-week-select {
+}
+.home-week-select .ant-select-selection {
+    outline: none;
+    background: #010913;
+    width: 150px;
+    border: 1px solid #5d471d;
+    color: #fff;
+}
+.home-week-select .ant-select-arrow {
+    color: #fff;
+}
+.home-week-dropdown .ant-select-dropdown-menu {
+}
+.home-week-dropdown .ant-select-dropdown-menu-item {
+    color: #dcdcdc;
+    background-color: #010913;
+
+    border: 1px solid #5d471d;
+    border-top: 0;
+}
+
+.home-week-select .ant-select-focused .ant-select-selection,
+.home-week-select .ant-select-selection:focus,
+.home-week-select .ant-select-selection:active {
+    box-shadow: none;
+}
+.home-week-dropdown .ant-select-dropdown-menu-item:first-child {
+    border: 1px solid #5d471d;
+}
+.home-week-dropdown .ant-select-dropdown-menu-item-active {
+    background-color: #c79a3c;
+    color: #000;
+}
 
 @media screen and (max-width: 991px) {
+    .home-list-item .home-list-item-box .rune-path-bg,
+    .home-list-item-box .home-player-bg {
+        transform: scale(0.96);
+        opacity: 0.4;
+    }
+    .chooseWeek {
+        justify-content: center;
+    }
 }
 
 @media screen and (max-width: 400px) {

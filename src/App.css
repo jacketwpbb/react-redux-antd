@@ -15,7 +15,8 @@ li {
 }
 
 body {
-	background: url(assets/magic-repeater-sm.jpg) top repeat-y #010913 fixed;
+	background: url(//static.tuwan.com/templet/lol/hd/rune_of_pro/images/magic-repeater-sm.jpg)
+		top repeat-y #010913 fixed;
 }
 
 .App-header {

@@ -6,15 +6,48 @@ export const FETCH_PLAYER_MATCH_LIST = "fetch_player_list";
 export const FETCH_CHAMPION_MATCH_LIST = "fetch_champion_list";
 export const FETCH_ACTIVE_CHAMPION = "fetch_active_champion";
 
+export const FETCH_LOLJSON = "fetch_loljson";
+
 export const PENDING = "_PENDING";
 export const FULFILLED = "_FULFILLED";
 export const REJECTED = "_REJECTED";
 
-const ROOT_URL = "/lolapi/api";
+const ROOT_URL = "//app.tuwan.com/lolapi/api/";
+
+const LOLJSON_ROOT_URL = "//lolstatic.tuwan.com/cdn/";
+// 8.4.1/data/zh_CN/runesReforged.json
+
+export function fetchLOLJson(patch) {
+	function getChampion(patch) {
+		return axios.get(
+			`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/champion.json`
+		);
+	}
+
+	function getItem(patch) {
+		return axios.get(`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/item.json`);
+	}
+	function getSummoner(patch) {
+		return axios.get(
+			`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/summoner.json`
+		);
+	}
+
+	const request = axios.all([
+		getChampion(patch),
+		getItem(patch),
+		getSummoner(patch)
+	]);
+
+	return {
+		type: FETCH_LOLJSON,
+		payload: request
+	};
+}
 
 export function fetchHomePageStats(week) {
-	const url = week
-		? `${ROOT_URL}/getLPLWeeklyData.ashx?&t=${Date.now()}`
+	const url = !week
+		? `${ROOT_URL}/getLPLWeeklyData.ashx?t=${Date.now()}`
 		: `${ROOT_URL}/getLPLWeeklyData.ashx?&procid=${100 + week * 10}`;
 
 	const request = axios.get(url);
@@ -47,9 +80,7 @@ export function fetchActiveChampion() {
 
 export function fetchPlayerMatchList(id) {
 	const request = axios.get(
-		`${ROOT_URL}/getLPLMatchResult.ashx?type=member&id=${
-			id
-		}&t=${Date.now()}`
+		`${ROOT_URL}/getLPLMatchResult.ashx?type=member&id=${id}&t=${Date.now()}`
 	);
 	return {
 		type: FETCH_PLAYER_MATCH_LIST,
@@ -59,9 +90,7 @@ export function fetchPlayerMatchList(id) {
 
 export function fetchChampionMatchList(id) {
 	const request = axios.get(
-		`${ROOT_URL}/getLPLMatchResult.ashx?type=champion&id=${
-			id
-		}&t=${Date.now()}`
+		`${ROOT_URL}/getLPLMatchResult.ashx?type=champion&id=${id}&t=${Date.now()}`
 	);
 	return {
 		type: FETCH_CHAMPION_MATCH_LIST,
