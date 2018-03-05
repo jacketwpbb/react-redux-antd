@@ -5,6 +5,8 @@ import { Row, Col, Icon, Select } from "antd";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import customPath from "../../route/routeLinkConfig.js";
+
 import { fetchHomePageStats } from "../../actions/index.js";
 
 import "./home.css";
@@ -41,13 +43,13 @@ class Home extends Component {
 		};
 	}
 	handleWeekChange(value) {
-		console.log(value);
 		this.props.fetchHomePageStats(value);
 		this.setState({
 			week: value
 		});
 	}
 	componentWillMount() {
+		console.log(this.props.location);
 		this.props.fetchHomePageStats();
 	}
 	renderRuneList() {
@@ -119,7 +121,9 @@ class Home extends Component {
 										className="home-rune-champions"
 										key={champion}
 									>
-										<Link to={`/champions/${champion}`}>
+										<Link
+											to={`${customPath}/champions/${champion}`}
+										>
 											<img
 												src={`//lolstatic.tuwan.com/cdn/${patchVersion}/img/champion/${champion}.png`}
 												alt={champion}
@@ -153,7 +157,7 @@ class Home extends Component {
 				>
 					<Link
 						className="home-link"
-						to={`/champions/${
+						to={`${customPath}/champions/${
 							championJson[championMap[championId]].id
 						}`}
 					>
@@ -256,7 +260,10 @@ class Home extends Component {
 					key={valueName}
 					className="home-list-item"
 				>
-					<Link className="home-link" to={`/players/${playerId}`}>
+					<Link
+						className="home-link"
+						to={`${customPath}/players/${playerId}`}
+					>
 						<div className="home-list-item-box home-player-list-item-box">
 							<div
 								className=" home-player-bg"

@@ -4,6 +4,8 @@ import "./ChampionStats.css";
 import { Row, Col } from "antd";
 
 import { Link } from "react-router-dom";
+
+import customPath from "../../route/routeLinkConfig.js";
 import { mapKey } from "../../util/index.js";
 
 import championJson from "../../lolJSON/champion.json";
@@ -67,7 +69,7 @@ const ChampionStats = ({ matchList }) => {
 								<li className="championItem" key={championId}>
 									<div className="champion-icon">
 										<Link
-											to={`/champions/${
+											to={`${customPath}/champions/${
 												keys[championId]
 											}`}
 										>
@@ -105,7 +107,7 @@ const ChampionStats = ({ matchList }) => {
 								<li className="championItem" key={championId}>
 									<div className="champion-icon">
 										<Link
-											to={`/champions/${
+											to={`${customPath}/champions/${
 												keys[championId]
 											}`}
 										>
@@ -136,7 +138,7 @@ const ChampionStats = ({ matchList }) => {
 								<li className="championItem" key={championId}>
 									<div className="champion-icon">
 										<Link
-											to={`/champions/${
+											to={`${customPath}/champions/${
 												keys[championId]
 											}`}
 										>

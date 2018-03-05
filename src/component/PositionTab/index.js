@@ -7,7 +7,7 @@ import { fetchPlayers } from "../../actions/index.js";
 import { Tabs, Icon } from "antd";
 
 import { Link } from "react-router-dom";
-
+import customPath from "../../route/routeLinkConfig.js";
 import { positionArr } from ".././../util/index.js";
 
 import "./PositionTab.css";
@@ -30,7 +30,7 @@ class SlidingTabsDemo extends React.Component {
     return filteredPlayers.map(({ NickName, MemberId, UserIcon, RealName }) => {
       return (
         <li className="player" key={MemberId}>
-          <Link to={`/players/${MemberId}`}>
+          <Link to={`${customPath}/players/${MemberId}`}>
             <img
               src={UserIcon}
               alt={RealName}

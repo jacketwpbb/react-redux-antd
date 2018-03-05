@@ -4,6 +4,7 @@ import { Row, Col, message, Icon } from "antd";
 
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
+import customPath from "../../route/routeLinkConfig.js";
 
 import { mapKey } from "../../util/index.js";
 
@@ -152,8 +153,10 @@ class ChampionList extends Component {
 				<Link
 					to={
 						activeChampions.indexOf(+championId) === -1
-							? "/champions"
-							: `/champions/${championMap[championId]}`
+							? `${customPath}/champions`
+							: `${customPath}/champions/${
+									championMap[championId]
+							  }`
 					}
 					onClick={
 						activeChampions.indexOf(+championId) === -1

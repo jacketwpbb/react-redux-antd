@@ -1,6 +1,7 @@
 import React from "react";
 import "./ProStats.css";
 import { Link } from "react-router-dom";
+import customPath from "../../route/routeLinkConfig.js";
 import { Row, Col } from "antd";
 
 const ProStats = ({ matchList }) => {
@@ -67,7 +68,9 @@ const ProStats = ({ matchList }) => {
 								}) => (
 									<li className="championItem" key={memberId}>
 										<div className="champion-icon">
-											<Link to={`/players/${memberId}`}>
+											<Link
+												to={`${customPath}/players/${memberId}`}
+											>
 												<img src={url} alt={gameName} />
 												<div className="player-game-name">
 													{gameName}
@@ -107,7 +110,9 @@ const ProStats = ({ matchList }) => {
 								}) => (
 									<li className="championItem" key={memberId}>
 										<div className="champion-icon">
-											<Link to={`/players/${memberId}`}>
+											<Link
+												to={`${customPath}/players/${memberId}`}
+											>
 												<img src={url} alt={gameName} />
 												<div className="player-game-name">
 													{gameName}
@@ -140,7 +145,9 @@ const ProStats = ({ matchList }) => {
 								}) => (
 									<li className="championItem" key={memberId}>
 										<div className="champion-icon">
-											<Link to={`/players/${memberId}`}>
+											<Link
+												to={`${customPath}/players/${memberId}`}
+											>
 												<img src={url} alt={gameName} />
 												<div className="player-game-name">
 													{gameName}

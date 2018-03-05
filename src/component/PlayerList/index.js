@@ -4,7 +4,7 @@ import { Row, Col, Icon } from "antd";
 
 import CInput from "../CInput/index.js";
 import { Link } from "react-router-dom";
-
+import customPath from "../../route/routeLinkConfig.js";
 import { connect } from "react-redux";
 
 import { fetchPlayers } from "../../actions/index.js";
@@ -130,7 +130,7 @@ class PlayerList extends Component {
 				md={4}
 				lg={3}
 			>
-				<Link to={`/players/${MemberId}`}>
+				<Link to={`${customPath}/players/${MemberId}`}>
 					<div className="champion-thumbnail-frame">
 						<div
 							className="champion-thumbnail"
