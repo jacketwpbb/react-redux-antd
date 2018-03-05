@@ -19,10 +19,7 @@ import Nav from "../src/component/Nav/index.js";
 //
 
 const Home = props => (
-  <AsyncComponent
-    {...props}
-    load={() => import("../src/component/Home/index.js")}
-  />
+  <AsyncComponent {...props} load={() => import("./component/HOME/index.js")} />
 );
 const PlayerList = props => (
   <AsyncComponent

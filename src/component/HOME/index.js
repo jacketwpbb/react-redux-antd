@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import { fetchHomePageStats } from "../../actions/index.js";
 
-import "./Home.css";
+import "./home.css";
 
 import runeJson from "../../lolJSON/runes.json";
 import { mapKey, positionArr } from "../../util/index.js";
