@@ -33,10 +33,17 @@ export function fetchLOLJson(patch) {
 		);
 	}
 
+	function getRunesReforged(patch) {
+		return axios.get(
+			`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/runesReforged.json`
+		);
+	}
+
 	const request = axios.all([
 		getChampion(patch),
 		getItem(patch),
-		getSummoner(patch)
+		getSummoner(patch),
+		getRunesReforged(patch)
 	]);
 
 	return {

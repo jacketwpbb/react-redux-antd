@@ -13,8 +13,6 @@ import championJson from "../../lolJSON/champion.json";
 const keys = mapKey(championJson.data, "key");
 
 const ChampionStats = ({ matchList }) => {
-	// console.log(matchList)
-
 	const heroSatus = {};
 	matchList.forEach(({ ChampionId, Game_W }) => {
 		if (!heroSatus[ChampionId]) {

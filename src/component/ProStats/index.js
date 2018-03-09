@@ -5,8 +5,6 @@ import customPath from "../../route/routeLinkConfig.js";
 import { Row, Col } from "antd";
 
 const ProStats = ({ matchList }) => {
-	// console.log(matchList)
-
 	const heroSatus = {};
 	matchList.forEach(({ BattlePlayer, MemberId, Game_W }) => {
 		if (!heroSatus[MemberId]) {

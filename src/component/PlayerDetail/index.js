@@ -47,7 +47,7 @@ class PlayerDetail extends Component {
 						title={
 							itemJson.data[itemId]
 								? itemJson.data[itemId].name
-								: "暂无数据"
+								: `此装备在${itemJson.version}版本已经移除`
 						}
 						content={
 							<div
@@ -148,7 +148,11 @@ class PlayerDetail extends Component {
 						符文
 					</Col>
 					<Col xs={20} md={12}>
-						<Rune runeList={heroInfo.runes_info_.runes_list_} />
+						<Rune
+							runeList={heroInfo.runes_info_.runes_list_}
+							runeJson={this.props.lolJSON.rune}
+							version={this.props.lolJSON.champion.version}
+						/>
 					</Col>
 				</Row>
 			</div>

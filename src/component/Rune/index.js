@@ -1,52 +1,59 @@
 import React from "react";
-import runeJson from "../../lolJSON/runes.json";
 
 import LOLPopover from "../LOLPopover/index.js";
+import { removeTags } from "../../util/index.js";
 
 import "./Rune.css";
 
-const Rune = ({ runeList }) => {
+const Rune = ({ runeList, runeJson, version }) => {
 	const runeMap = {};
-	const treeNameMap = {
-		坚决: 4,
-		巫术: 3,
-		启迪: 5,
-		精密: 1,
-		主宰: 2
+	const runePathMap = {
+		巫术: "SORCERY",
+		精密: "PRECISION",
+		坚决: "RESOLVE",
+		启迪: "INSPIRATION",
+		主宰: "DOMINATION"
 	};
-	runeJson.styles.forEach(({ slots, name }) => {
+
+	runeJson.forEach(({ slots, name }) => {
 		slots.forEach(({ runes }) => {
 			runes.forEach(rune => {
-				runeMap[rune.runeId] = {
+				runeMap[rune.id] = {
 					...rune,
-					tree: treeNameMap[name],
+					tree: runePathMap[name],
 					treeName: name
 				};
 			});
 		});
 	});
-	function getTreeClassName(tree) {
-		switch (tree) {
-			case 1:
-				return "PRECISION";
-			case 2:
-				return "DOMINATION";
-			case 3:
-				return "SORCERY";
-			case 4:
-				return "RESOLVE";
-			case 5:
-				return "INSPIRATION";
-			default:
-				return "";
-		}
-	}
 
 	const runes = runeList.map(({ runes_id_ }, idx) => {
-		const treeName = getTreeClassName(runeMap[runes_id_].tree);
+		//如果符文不存在
+		if (!runeMap[runes_id_]) {
+			return (
+				<LOLPopover
+					title={`此符文在当前版本(${version})已经移除`}
+					key={runes_id_}
+				>
+					<div
+						className={`rune-image  ${idx === 0 ? "keyStone" : ""}`}
+					>
+						<img
+							src={`//lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${runes_id_}.png`}
+							alt={runes_id_}
+						/>
+						<span>{"暂无数据"}</span>
+					</div>
+				</LOLPopover>
+			);
+		}
+		const treeName = runeMap[runes_id_].tree;
 		return (
 			<LOLPopover
-				content={runeMap[runes_id_].shortDescription}
+				content={removeTags(runeMap[runes_id_].shortDesc).replace(
+					/@.+@/,
+					"X"
+				)}
 				title={runeMap[runes_id_].name}
 				className={{ title: treeName }}
 				key={runes_id_}
@@ -70,17 +77,13 @@ const Rune = ({ runeList }) => {
 
 	rune1.push(
 		<li
-			className={`rune-image ${getTreeClassName(
-				runeMap[runeList[0].runes_id_].tree
-			)}`}
+			className={`rune-image ${runeMap[runeList[0].runes_id_].tree}`}
 			key="aa"
 		>
 			<img
-				src={`//lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
-					runeMap[runeList[0].runes_id_].tree
-				).toLowerCase()}/icon-${getTreeClassName(
-					runeMap[runeList[0].runes_id_].tree
-				)
+				src={`//lpl.qq.com/es/preseason/img/runeBuilder/runes/${runeMap[
+					runeList[0].runes_id_
+				].tree.toLowerCase()}/icon-${runeMap[runeList[0].runes_id_].tree
 					.toLowerCase()
 					.slice(0, 1)}-36x36.png`}
 				alt=""
@@ -91,17 +94,13 @@ const Rune = ({ runeList }) => {
 	rune1.push(runes.slice(0, 4));
 	rune2.push(
 		<li
-			className={`rune-image ${getTreeClassName(
-				runeMap[runeList[4].runes_id_].tree
-			)}`}
+			className={`rune-image ${runeMap[runeList[4].runes_id_].tree}`}
 			key="bb"
 		>
 			<img
-				src={`//lpl.qq.com/es/preseason/img/runeBuilder/runes/${getTreeClassName(
-					runeMap[runeList[4].runes_id_].tree
-				).toLowerCase()}/icon-${getTreeClassName(
-					runeMap[runeList[4].runes_id_].tree
-				)
+				src={`//lpl.qq.com/es/preseason/img/runeBuilder/runes/${runeMap[
+					runeList[4].runes_id_
+				].tree.toLowerCase()}/icon-${runeMap[runeList[4].runes_id_].tree
 					.toLowerCase()
 					.slice(0, 1)}-36x36.png`}
 				alt=""

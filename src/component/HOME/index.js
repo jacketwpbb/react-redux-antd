@@ -11,29 +11,8 @@ import { fetchHomePageStats } from "../../actions/index.js";
 
 import "./home.css";
 
-import runeJson from "../../lolJSON/runes.json";
 import { mapKey, positionArr } from "../../util/index.js";
 const Option = Select.Option;
-
-const runeMap = {};
-const runePathMap = {
-	巫术: "SORCERY",
-	精密: "PRECISION",
-	坚决: "RESOLVE",
-	启迪: "INSPIRATION",
-	主宰: "DOMINATION"
-};
-runeJson.styles.forEach(({ slots, name }) => {
-	slots.forEach(({ runes }) => {
-		runes.forEach(rune => {
-			runeMap[rune.runeId] = {
-				...rune,
-				tree: runePathMap[name],
-				treeName: name
-			};
-		});
-	});
-});
 
 class Home extends Component {
 	constructor(props) {
@@ -49,13 +28,34 @@ class Home extends Component {
 		});
 	}
 	componentWillMount() {
-		console.log(this.props.location);
 		this.props.fetchHomePageStats();
 	}
 	renderRuneList() {
 		if (!this.props.lolJSON.champion) {
 			return;
 		}
+
+		const runeMap = {};
+		const runePathMap = {
+			巫术: "SORCERY",
+			精密: "PRECISION",
+			坚决: "RESOLVE",
+			启迪: "INSPIRATION",
+			主宰: "DOMINATION"
+		};
+
+		this.props.lolJSON.rune.forEach(({ slots, name }) => {
+			slots.forEach(({ runes }) => {
+				runes.forEach(rune => {
+					runeMap[rune.id] = {
+						...rune,
+						tree: runePathMap[name],
+						treeName: name
+					};
+				});
+			});
+		});
+
 		const {
 			data: championJson,
 			version: patchVersion
@@ -222,8 +222,6 @@ class Home extends Component {
 		];
 
 		const playerWeeklyArr = playerValueArr.map(({ key, valueName }) => {
-			console.log(playerWeekly);
-
 			const { BMInfo, Value, Member } = playerWeekly[key];
 
 			const nickNameIndex = BMInfo.GameName.indexOf(BMInfo.NickName);

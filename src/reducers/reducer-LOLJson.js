@@ -4,7 +4,8 @@ export default function(
 	state = {
 		champion: null,
 		item: null,
-		summoner: null
+		summoner: null,
+		rune: null
 	},
 	action
 ) {
@@ -13,7 +14,8 @@ export default function(
 			return {
 				champion: action.payload[0].data,
 				item: action.payload[1].data,
-				summoner: action.payload[2].data
+				summoner: action.payload[2].data,
+				rune: action.payload[3].data
 			};
 
 		default:

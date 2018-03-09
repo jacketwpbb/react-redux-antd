@@ -44,3 +44,9 @@ body {
 .ant-message-notice-content {
 	background: #484848 !important;
 }
+
+.championList {
+	color: #a09b8c;
+	margin: 30px auto 0;
+	max-width: 1050px;
+}
