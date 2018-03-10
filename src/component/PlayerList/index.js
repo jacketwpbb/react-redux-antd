@@ -46,7 +46,7 @@ class PlayerList extends Component {
 			}
 		}
 
-		const button = getParentNodeByTag(e.target, "button");
+		const button = getParentNodeByTag(e.target, "button") || e.target;
 		if (button) {
 			if (button.classList.contains("active")) {
 				button.classList.remove("active");

@@ -39,7 +39,7 @@ const Rune = ({ runeList, runeJson, version }) => {
 						className={`rune-image  ${idx === 0 ? "keyStone" : ""}`}
 					>
 						<img
-							src={`//lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${runes_id_}.png`}
+							src={`//static.tuwan.com/templet/lol/hd/rune_of_pro/runes/${runes_id_}.png`}
 							alt={runes_id_}
 						/>
 						<span>{"暂无数据"}</span>
@@ -51,7 +51,7 @@ const Rune = ({ runeList, runeJson, version }) => {
 		return (
 			<LOLPopover
 				content={removeTags(runeMap[runes_id_].shortDesc).replace(
-					/@.+@/,
+					/@[^@]+@/g,
 					"X"
 				)}
 				title={runeMap[runes_id_].name}
@@ -64,7 +64,7 @@ const Rune = ({ runeList, runeJson, version }) => {
 					}`}
 				>
 					<img
-						src={`//lol.qq.com/act/a20170926preseason/img/runeBuilder/runes/108x108/${runes_id_}.png`}
+						src={`//static.tuwan.com/templet/lol/hd/rune_of_pro/runes/${runes_id_}.png`}
 						alt={runes_id_}
 					/>
 					<span>{runeMap[runes_id_].name}</span>

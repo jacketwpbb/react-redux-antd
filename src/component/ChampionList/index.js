@@ -59,7 +59,8 @@ class ChampionList extends Component {
 			}
 		}
 
-		const button = getParentNodeByTag(e.target, "button");
+		const button = getParentNodeByTag(e.target, "button") || e.target;
+
 		if (button) {
 			if (button.classList.contains("active")) {
 				button.classList.remove("active");
@@ -82,6 +83,18 @@ class ChampionList extends Component {
 		}
 	}
 	renderFilteredList() {
+		const activeChampions = this.props.activeChampions;
+		const activeChampionPending = this.props.activeChampionPending;
+
+		if (activeChampionPending || !this.props.lolJSON.champion) {
+			return (
+				<div className="loading">
+					<Icon type="loading" style={{ fontSize: 50 }} spin />
+					<div>loading...</div>
+				</div>
+			);
+		}
+
 		const searchFilterValue = this.state.filterStr;
 
 		const championJson = this.props.lolJSON.champion;
@@ -129,17 +142,6 @@ class ChampionList extends Component {
 			);
 		}
 
-		const activeChampions = this.props.activeChampions;
-		const activeChampionPending = this.props.activeChampionPending;
-
-		if (activeChampionPending) {
-			return (
-				<div className="loading">
-					<Icon type="loading" style={{ fontSize: 50 }} spin />
-					<div>loading...</div>
-				</div>
-			);
-		}
 		return filteredList.map(championId => (
 			<Col
 				className="championLinkItem"

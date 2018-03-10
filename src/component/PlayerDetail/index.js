@@ -319,7 +319,7 @@ class PlayerDetail extends Component {
 		return (
 			<div className="PlayerDetail">
 				<div className="header">{this.renderHeader()}</div>
-				{this.props.isFetching ? (
+				{this.props.isFetching || !this.props.lolJSON.champion ? (
 					<div className="loading">
 						<Icon type="loading" style={{ fontSize: 50 }} spin />
 						<div>loading...</div>

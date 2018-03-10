@@ -17,28 +17,24 @@ const ROOT_URL = "//app.tuwan.com/lolapi/api/";
 const LOLJSON_ROOT_URL = "//lolstatic.tuwan.com/cdn/";
 // 8.4.1/data/zh_CN/runesReforged.json
 
+function getChampion(patch) {
+	return axios.get(`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/champion.json`);
+}
+
+function getItem(patch) {
+	return axios.get(`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/item.json`);
+}
+function getSummoner(patch) {
+	return axios.get(`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/summoner.json`);
+}
+
+function getRunesReforged(patch) {
+	return axios.get(
+		`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/runesReforged.json`
+	);
+}
+
 export function fetchLOLJson(patch) {
-	function getChampion(patch) {
-		return axios.get(
-			`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/champion.json`
-		);
-	}
-
-	function getItem(patch) {
-		return axios.get(`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/item.json`);
-	}
-	function getSummoner(patch) {
-		return axios.get(
-			`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/summoner.json`
-		);
-	}
-
-	function getRunesReforged(patch) {
-		return axios.get(
-			`${LOLJSON_ROOT_URL}${patch}/data/zh_CN/runesReforged.json`
-		);
-	}
-
 	const request = axios.all([
 		getChampion(patch),
 		getItem(patch),
